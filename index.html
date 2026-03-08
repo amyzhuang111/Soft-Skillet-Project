@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amy Zhuang</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <span class="site-name">Amy Zhuang</span>
+    <hr class="header-line">
+    <nav>
+      <a href="#" id="projects-link">Projects</a>
+      <a href="https://www.linkedin.com/in/amy-zhuang/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/amyzhuang111" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="aura-wrap" id="aura-wrap">
+    <div class="aura"></div>
+  </div>
+
+  <!-- Home screen -->
+  <main class="home" id="home"></main>
+
+  <!-- Projects screen -->
+  <main class="projects-page" id="projects-page">
+    <div class="projects-inner">
+      <button class="back-btn" id="back-btn">&larr; Back</button>
+      <div class="project-list">
+        <a href="https://regpulse-mu.vercel.app" target="_blank" rel="noopener" class="project-card">
+          <span class="card-title">RegPulse</span>
+          <span class="card-desc">ai-powered compliance monitoring for financial services</span>
+          <span class="card-meta">next.js &middot; typescript &middot; supabase &middot; gpt-4o</span>
+        </a>
+        <a href="https://tokker-mistral-hackathon.vercel.app" target="_blank" rel="noopener" class="project-card">
+          <span class="card-title">Tokker</span>
+          <span class="card-desc">ai brand deal discovery for tiktok creators</span>
+          <span class="card-meta">next.js &middot; typescript &middot; mistral ai &middot; elevenlabs</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; Amy Zhuang</span>
+  </footer>
+
+  <script>
+    var wrap = document.getElementById('aura-wrap');
+    var home = document.getElementById('home');
+    var projectsPage = document.getElementById('projects-page');
+    var projectsLink = document.getElementById('projects-link');
+    var backBtn = document.getElementById('back-btn');
+
+    projectsLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      wrap.style.opacity = '0';
+      setTimeout(function() {
+        wrap.style.display = 'none';
+        home.style.display = 'none';
+        projectsPage.style.display = 'block';
+      }, 1200);
+    });
+
+    backBtn.addEventListener('click', function() {
+      projectsPage.style.display = 'none';
+      home.style.display = 'flex';
+      wrap.style.display = 'block';
+      // force reflow before fading in
+      wrap.offsetHeight;
+      wrap.style.opacity = '1';
+    });
+  </script>
+
+</body>
+</html>

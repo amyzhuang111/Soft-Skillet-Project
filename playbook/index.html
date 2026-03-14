@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soft Skillet — Event Playbook & Tools</title>
+    <title>Soft Skillet — Conference Revenue Playbook</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1016,7 +1016,7 @@
     </div>
     <button class="hamburger" onclick="toggleMobileNav()">&#9776;</button>
     <nav class="nav-tabs" id="navTabs">
-        <button class="nav-tab active" onclick="showPage('playbook', this)">Playbook</button>
+        <button class="nav-tab active" onclick="showPage('playbook', this)">Revenue Playbook</button>
         <button class="nav-tab" onclick="showPage('tools', this)">Tools</button>
         <button class="nav-tab" onclick="showPage('leads', this)">Leads</button>
         <button class="nav-tab" onclick="showPage('email', this)">Email Generator</button>
@@ -1029,8 +1029,41 @@
 <div id="page-playbook" class="page active">
 
     <div class="hero">
-        <h1>Event Playbook</h1>
-        <p>The complete system for generating maximum pipeline from in-person events. Every recommendation grounded in real conversations from the NYC Restaurant Show.</p>
+        <h1>Conference Revenue Playbook</h1>
+        <p>A repeatable system for converting in-person event conversations into scheduled demos and closed deals. Every recommendation grounded in 10 real conversations from the NYC Restaurant Show.</p>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="card" style="border-left:4px solid var(--navy);margin-bottom:32px;">
+        <h3 style="margin-top:0;font-size:20px;">Executive Summary</h3>
+        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">The NYC Restaurant Show produced strong buyer interest but weak pipeline conversion.</p>
+        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">From 10 conversations: <strong>6 prospects were high-ICP matches</strong>, <strong>5 expressed strong interest</strong>, but <strong>only 2 showed demo intent</strong>. This represents a 20% demo-intent rate — significantly below achievable SaaS event benchmarks (~50%).</p>
+        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">The core issue was not product-market fit or buyer interest. Instead, <strong>three execution gaps</strong> reduced pipeline generation:</p>
+        <div class="mistake-item" style="border-left:4px solid var(--red);margin-bottom:8px"><div class="mistake-num mistake-num-red">1</div><div class="mistake-content"><div class="mistake-title">Weak closing mechanics</div><div class="mistake-desc">Reps accepted vague next steps ("email me info," "reach out next month") instead of scheduling demos on the spot.</div></div></div>
+        <div class="mistake-item" style="border-left:4px solid var(--red);margin-bottom:8px"><div class="mistake-num mistake-num-red">2</div><div class="mistake-content"><div class="mistake-title">Incorrect pitch sequencing</div><div class="mistake-desc">Product pitches did not always match buyer pain — AI Seating was presented to buyers who asked for predictability or partnership.</div></div></div>
+        <div class="mistake-item" style="border-left:4px solid var(--red);margin-bottom:8px"><div class="mistake-num mistake-num-red">3</div><div class="mistake-content"><div class="mistake-title">Champion mismanagement</div><div class="mistake-desc">Internal advocates were bypassed instead of empowered — turning enthusiastic contacts into reluctant participants.</div></div></div>
+        <p style="color:var(--text-secondary);font-size:15px;margin-top:16px;margin-bottom:0"><strong>If Soft Skillet improves lead-to-demo conversion from 20% to ~50%, the same event pipeline would produce ~2.5× more expected deals — without increasing marketing spend.</strong> This playbook provides a repeatable system to achieve that improvement.</p>
+    </div>
+
+    <!-- STRATEGY PILLARS -->
+    <h2><span class="phase-dot" style="background:var(--navy);"></span> Strategy Pillars</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:48px;">
+        <div class="card" style="text-align:center;padding:32px 24px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;font-weight:800;color:var(--navy);font-family:'Montserrat',sans-serif;">1</div>
+            <h3 style="margin:0 0 12px;font-size:16px;">Target the Right Restaurants</h3>
+            <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin:0">Focus on operators with reservation-based service, existing OpenTable/Resy dissatisfaction, demand volatility, and multi-location potential. These restaurants convert fastest to Smooth Revenue or AI Seating.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:32px 24px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;font-weight:800;color:var(--navy);font-family:'Montserrat',sans-serif;">2</div>
+            <h3 style="margin:0 0 12px;font-size:16px;">Diagnose Pain Before Pitching</h3>
+            <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin:0">The highest-performing conversations began with operator pain discovery, not product explanation. Ask diagnostic questions, mirror the buyer's language, and select the pitch based on the problem — not personal preference.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:32px 24px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;font-weight:800;color:var(--navy);font-family:'Montserrat',sans-serif;">3</div>
+            <h3 style="margin:0 0 12px;font-size:16px;">Convert Interest Into Scheduled Next Steps</h3>
+            <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin:0">Most pipeline was lost at the final moment. Replace vague "I'll send you info" with a specific demo, two proposed times, and calendar scheduling on the spot. This change alone could double demo conversion.</p>
+        </div>
     </div>
 
     <!-- FUNNEL ANALYSIS -->

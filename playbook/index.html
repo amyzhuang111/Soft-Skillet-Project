@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Skillet — Event Playbook & Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0E1C37;
+            --navy-light: #1a2d4f;
+            --navy-mid: #152342;
+            --blue-light: #d7f1fe;
+            --blue-accent: #C3E2F4;
+            --blue-bright: #7ac4eb;
+            --blue-bright-hover: #6db0d3;
+            --blue-mid: #7ec8f0;
+            --white: #ffffff;
+            --off-white: #f7fafd;
+            --gray-50: #f0f4f8;
+            --gray-100: #e2e8f0;
+            --gray-200: #cbd5e1;
+            --gray-300: #94a3b8;
+            --gray-400: #64748b;
+            --gray-500: #475569;
+            --gray-600: #334155;
+            --text-primary: #0E1C37;
+            --text-secondary: #3f4a5f;
+            --text-muted: #64748b;
+            --green: #10b981;
+            --green-light: #d1fae5;
+            --red: #ef4444;
+            --red-light: #fee2e2;
+            --yellow: #f59e0b;
+            --yellow-light: #fef3c7;
+            --purple: #8b5cf6;
+            --purple-light: #ede9fe;
+            --orange: #f97316;
+            --orange-light: #ffedd5;
+            --radius: 20px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --shadow-sm: 0px 2px 5px rgba(0,0,0,0.06);
+            --shadow-md: 0px 4px 24px rgba(0,0,0,0.09);
+            --shadow-lg: 0px 8px 40px rgba(0,0,0,0.12);
+            --transition: 0.2s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', 'Inter', -apple-system, sans-serif;
+            background: var(--blue-light);
+            color: var(--text-primary);
+            line-height: 1.65;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 999;
+            background: transparent;
+            padding: 0 32px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: box-shadow 0.2s, background-color 0.2s;
+        }
+        .navbar.scrolled {
+            background-color: var(--white);
+            box-shadow: 0px 4px 24px rgba(0,0,0,0.09);
+        }
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 16px;
+        }
+        .logo span { color: var(--blue-bright); font-weight: 600; }
+
+        .nav-tabs { display: flex; gap: 4px; }
+        .nav-tab {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+        }
+        .nav-tab:hover { opacity: 0.7; }
+        .nav-tab.active {
+            color: var(--white);
+            background: var(--blue-bright);
+            opacity: 1;
+        }
+
+        .hamburger {
+            display: none;
+            background: none; border: none;
+            color: var(--navy); font-size: 24px;
+            cursor: pointer; padding: 8px;
+        }
+
+        /* ===== MAIN ===== */
+        .main { padding: 92px 32px 64px; max-width: 960px; margin: 0 auto; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeUp 0.35s ease; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: var(--navy);
+            border-radius: 20px;
+            padding: 60px 44px;
+            margin-bottom: 48px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 18px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 80px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 .phase-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin: 24px 0 12px;
+            letter-spacing: -0.2px;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .card:hover { box-shadow: var(--shadow-md); }
+
+        /* ===== ACCORDION ===== */
+        .accordion { margin-bottom: 10px; }
+        .accordion-header {
+            width: 100%;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: left;
+            box-shadow: var(--shadow-sm);
+        }
+        .accordion-header:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+        .accordion.open .accordion-header {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-color: transparent;
+        }
+        .accordion-header .tag {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+        .tag-pre { background: var(--blue-light); color: var(--navy); }
+        .tag-during { background: var(--orange-light); color: var(--orange); }
+        .tag-post { background: var(--green-light); color: var(--green); }
+
+        .accordion-arrow {
+            transition: transform 0.3s;
+            color: var(--gray-300);
+            flex-shrink: 0;
+        }
+        .accordion.open .accordion-arrow { transform: rotate(180deg); }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s ease;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-top: none;
+            border-bottom-left-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+        .accordion.open .accordion-body { max-height: 6000px; }
+        .accordion-content { padding: 28px; }
+        .accordion-content p { margin-bottom: 14px; color: var(--text-secondary); font-size: 15px; }
+        .accordion-content p strong { color: var(--text-primary); }
+
+        /* ===== TABLES ===== */
+        .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-sm); border: 1px solid var(--gray-100); }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th {
+            text-align: left;
+            padding: 14px 18px;
+            background: var(--gray-50);
+            color: var(--text-muted);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        td { padding: 14px 18px; border-top: 1px solid var(--gray-100); color: var(--text-secondary); }
+        tr:hover td { background: var(--gray-50); }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-hot { background: var(--red-light); color: var(--red); }
+        .badge-warm { background: var(--yellow-light); color: var(--yellow); }
+        .badge-cool { background: var(--blue-light); color: var(--blue-bright); }
+        .badge-no { background: var(--gray-50); color: var(--gray-400); }
+
+        /* ===== SCRIPT BLOCKS ===== */
+        .script {
+            background: var(--gray-50);
+            border-left: 4px solid var(--navy);
+            padding: 18px 22px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 14px 0;
+            font-size: 14px;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.75;
+        }
+
+        /* ===== PITCH MATCHER ===== */
+        .matcher-container { margin: 24px 0; }
+        .matcher-prompt {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pain-options { display: flex; flex-direction: column; gap: 8px; }
+        .pain-btn {
+            background: var(--white);
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            padding: 16px 22px;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .pain-btn:hover { border-color: var(--navy); color: var(--text-primary); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+        .pain-btn.selected { border-color: var(--navy); background: var(--blue-light); color: var(--text-primary); }
+
+        .matcher-result {
+            margin-top: 20px;
+            padding: 24px;
+            border-radius: var(--radius);
+            display: none;
+            animation: fadeUp 0.3s;
+        }
+        .matcher-result.show { display: block; }
+        .matcher-result h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+        .matcher-result .layer-info { font-size: 13px; color: var(--text-muted); margin-top: 12px; }
+
+        /* ===== ROLE PLAY ===== */
+        .roleplay-card {
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+        .roleplay-card h3 { margin-top: 0; }
+        .buyer-says {
+            background: var(--purple-light);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin: 14px 0;
+            font-style: italic;
+            color: var(--text-primary);
+            font-size: 14px;
+            border-left: 4px solid var(--purple);
+        }
+        .reveal-btn {
+            background: var(--blue-bright);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            padding: 13px 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .reveal-btn:hover { background: var(--blue-bright-hover); transform: translateY(-1px); }
+        .roleplay-answer {
+            display: none;
+            margin-top: 16px;
+            padding: 18px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .roleplay-answer.show { display: block; animation: fadeUp 0.3s; }
+        .answer-correct { background: var(--green-light); border: 1px solid rgba(16,185,129,0.2); }
+        .answer-wrong { background: var(--red-light); border: 1px solid rgba(239,68,68,0.2); margin-bottom: 10px; }
+        .answer-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+        .answer-label.good { color: var(--green); }
+        .answer-label.bad { color: var(--red); }
+
+        /* ===== OBJECTION TABS ===== */
+        .objection-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+        .objection-tab {
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1.5px solid var(--gray-200);
+            background: var(--white);
+            color: var(--text-muted);
+            transition: var(--transition);
+            font-family: 'DM Sans', sans-serif;
+        }
+        .objection-tab:hover { border-color: var(--navy); color: var(--text-primary); }
+        .objection-tab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+        .objection-panel { display: none; }
+        .objection-panel.active { display: block; animation: fadeUp 0.3s; }
+
+        /* ===== COMPETITIVE TOGGLE ===== */
+        .competitive-toggle { display: flex; gap: 0; margin-bottom: 20px; }
+        .competitive-toggle button {
+            flex: 1; padding: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid var(--gray-200);
+            background: var(--white);
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .competitive-toggle button:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+        .competitive-toggle button:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-left: none; }
+        .competitive-toggle button.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+        .competitive-panel { display: none; }
+        .competitive-panel.active { display: block; animation: fadeUp 0.3s; }
+
+        .intel-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+        .intel-card strong { font-family: 'Montserrat', sans-serif; font-size: 14px; }
+        .intel-card .complaint { font-size: 14px; font-style: italic; color: var(--text-muted); margin: 10px 0; }
+        .intel-card .angle { font-size: 14px; color: var(--text-primary); margin-top: 12px; padding: 14px; background: var(--blue-light); border-radius: var(--radius-xs); }
+
+        /* ===== MISTAKE ITEMS ===== */
+        .mistake-item {
+            display: flex;
+            gap: 16px;
+            padding: 18px;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+        .mistake-item:hover { box-shadow: var(--shadow-sm); }
+        .mistake-num {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .mistake-num-red { background: var(--red-light); color: var(--red); }
+        .mistake-num-accent { background: var(--blue-light); color: var(--navy); }
+        .mistake-content { flex: 1; }
+        .mistake-title { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+        .mistake-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .mistake-fix { font-size: 13px; color: var(--green); margin-top: 6px; font-weight: 500; }
+
+        /* ===== QUICK REF ===== */
+        .quick-ref {
+            background: var(--navy);
+            border-radius: var(--radius);
+            padding: 36px;
+            color: var(--white);
+            font-size: 14px;
+            line-height: 1.9;
+            box-shadow: var(--shadow-lg);
+        }
+        .quick-ref .qr-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            color: var(--blue-mid);
+        }
+        .quick-ref .qr-section { margin-bottom: 20px; }
+        .quick-ref .qr-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; color: var(--white); }
+        .quick-ref ul { list-style: none; padding-left: 18px; }
+        .quick-ref ul li { color: rgba(255,255,255,0.75); margin-bottom: 2px; }
+        .quick-ref ul li::before { content: "→ "; color: var(--blue-mid); font-weight: 600; }
+        .quick-ref .qr-never li::before { content: "✗ "; color: var(--red); }
+
+        /* ===== FORMS ===== */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px; font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .form-group label .required { color: var(--red); }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--white);
+            border: 1.5px solid var(--gray-200);
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(14,28,55,0.08);
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; border-radius: var(--radius); }
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        /* ===== TEMP SELECTOR ===== */
+        .temp-selector { display: flex; gap: 8px; }
+        .temp-option {
+            flex: 1; padding: 12px;
+            text-align: center;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px; font-weight: 600;
+            border: 2px solid var(--gray-200);
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--text-muted);
+        }
+        .temp-option:hover { border-color: var(--gray-300); }
+        .temp-option.selected-hot { border-color: var(--red); background: var(--red-light); color: var(--red); }
+        .temp-option.selected-warm { border-color: var(--yellow); background: var(--yellow-light); color: var(--yellow); }
+        .temp-option.selected-cool { border-color: var(--blue-bright); background: var(--blue-light); color: var(--blue-bright); }
+        .temp-option.selected-no { border-color: var(--gray-300); background: var(--gray-50); color: var(--gray-400); }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 13px 50px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary { background: var(--blue-bright); color: var(--white); box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { background: var(--blue-bright-hover); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--white); color: var(--text-primary); border: 1.5px solid var(--gray-200); }
+        .btn-secondary:hover { border-color: var(--navy); }
+        .btn-danger { background: var(--red-light); color: var(--red); }
+        .btn-danger:hover { background: #fecaca; }
+        .btn-group { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+
+        /* ===== LEADS TABLE ===== */
+        .leads-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 12px;
+        }
+        .leads-count { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+        .leads-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 6px 16px; border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px; font-weight: 600;
+            cursor: pointer; border: 1.5px solid var(--gray-200);
+            background: var(--white); color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .filter-btn:hover { border-color: var(--navy); }
+        .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+        .lead-row { cursor: pointer; }
+        .empty-state { text-align: center; padding: 56px 24px; color: var(--text-muted); }
+        .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.3; }
+
+        /* ===== EMAIL GENERATOR ===== */
+        .email-type-selector { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+        .email-type-btn {
+            padding: 10px 20px; border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; font-weight: 500;
+            cursor: pointer; border: 1.5px solid var(--gray-200);
+            background: var(--white); color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .email-type-btn:hover { border-color: var(--navy); }
+        .email-type-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+        .email-preview {
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .email-preview-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            background: var(--gray-50);
+        }
+        .email-field { display: flex; align-items: center; gap: 12px; font-size: 13px; margin-bottom: 6px; }
+        .email-field:last-child { margin-bottom: 0; }
+        .email-field-label { color: var(--text-muted); min-width: 60px; font-weight: 600; font-family: 'Montserrat', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .email-field-value { color: var(--text-primary); }
+        .email-preview-body {
+            padding: 28px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+        .copy-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 24px; border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; border: 1.5px solid var(--gray-200);
+            background: var(--white); color: var(--text-muted);
+            transition: var(--transition); margin-top: 14px;
+        }
+        .copy-btn:hover { border-color: var(--navy); color: var(--text-primary); }
+        .copy-btn.copied { border-color: var(--green); color: var(--green); background: var(--green-light); }
+
+        /* ===== TIMER ===== */
+        .timer-display { text-align: center; padding: 36px; }
+        .timer-time {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 80px; font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -3px;
+            color: var(--navy);
+        }
+        .timer-phase {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px; font-weight: 700;
+            margin-top: 8px;
+        }
+        .timer-hint { font-size: 14px; color: var(--text-muted); margin-top: 6px; }
+        .timer-bar {
+            height: 8px; background: var(--gray-100);
+            border-radius: 4px; margin: 28px 0; overflow: hidden;
+        }
+        .timer-bar-fill { height: 100%; border-radius: 4px; transition: width 1s linear, background-color 0.5s; }
+        .timer-controls { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .timer-phases-list { display: flex; gap: 6px; margin-top: 24px; }
+        .timer-phase-dot {
+            flex: 1; height: 40px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px; font-weight: 600;
+            color: var(--text-muted); background: var(--gray-50);
+            transition: all 0.3s; border: 1px solid var(--gray-100);
+        }
+        .timer-phase-dot.active { color: var(--white); border-color: transparent; }
+        .timer-phase-dot.completed { opacity: 0.4; }
+
+        /* ===== SCORECARD ===== */
+        .score-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; margin: 16px 0;
+        }
+        .score-item {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-sm);
+            padding: 20px; text-align: center;
+        }
+        .score-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px; font-weight: 800;
+        }
+        .score-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(14,28,55,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            align-items: center; justify-content: center; padding: 24px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius);
+            width: 100%; max-width: 600px;
+            max-height: 80vh; overflow-y: auto;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeUp 0.3s;
+        }
+        .modal h3 { margin-top: 0; font-family: 'Montserrat', sans-serif; }
+        .modal-close {
+            float: right; background: var(--gray-50);
+            border: none; color: var(--text-muted);
+            width: 32px; height: 32px;
+            border-radius: 50%; font-size: 18px;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--gray-100); }
+        .detail-row {
+            display: flex; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid var(--gray-100);
+            font-size: 14px;
+        }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { color: var(--text-muted); }
+        .detail-value { color: var(--text-primary); font-weight: 500; text-align: right; max-width: 60%; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+                position: fixed; top: 68px; left: 0; right: 0;
+                background: var(--white); border-bottom: 1px solid var(--gray-100);
+                flex-direction: column; padding: 12px;
+                box-shadow: var(--shadow-md);
+            }
+            .nav-tabs.open { display: flex; }
+            .hamburger { display: block; }
+            .form-grid { grid-template-columns: 1fr; }
+            .hero { padding: 32px 24px; }
+            .hero h1 { font-size: 26px; }
+            .main { padding: 80px 16px 48px; }
+            .timer-time { font-size: 52px; }
+            .temp-selector { flex-wrap: wrap; }
+            .timer-phases-list { flex-wrap: wrap; }
+            .score-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== FUNNEL & METRICS ===== */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .metric-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+        .metric-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 4px;
+        }
+        .funnel-bar-container { margin: 20px 0; }
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        .funnel-step-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 160px;
+            text-align: right;
+        }
+        .funnel-bar-track {
+            flex: 1;
+            height: 32px;
+            background: var(--gray-50);
+            border-radius: var(--radius-xs);
+            overflow: hidden;
+            position: relative;
+        }
+        .funnel-bar-fill {
+            height: 100%;
+            border-radius: var(--radius-xs);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+            transition: width 0.8s ease;
+        }
+        .funnel-drop {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            color: var(--red);
+            font-weight: 600;
+            min-width: 60px;
+        }
+
+        .insight-box {
+            background: var(--navy);
+            border-radius: 20px;
+            padding: 32px;
+            color: var(--white);
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .insight-box h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--blue-mid);
+            margin: 0 0 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .insight-box p {
+            color: rgba(255,255,255,0.8);
+            font-size: 15px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 10px;
+        }
+        .insight-box strong { color: var(--white); }
+
+        .icp-score-table th { text-align: center; }
+        .icp-score-table td:nth-child(2),
+        .icp-score-table td:nth-child(3),
+        .icp-score-table td:nth-child(4),
+        .icp-score-table td:nth-child(5),
+        .icp-score-table td:nth-child(6),
+        .icp-score-table td:nth-child(7) { text-align: center; }
+        .icp-score-table th:nth-child(2),
+        .icp-score-table th:nth-child(3),
+        .icp-score-table th:nth-child(4),
+        .icp-score-table th:nth-child(5),
+        .icp-score-table th:nth-child(6),
+        .icp-score-table th:nth-child(7) { text-align: center; }
+
+        .timeline-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .timeline-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 64px;
+        }
+        .timeline-day {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .timeline-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gray-200);
+            margin: 4px 0;
+        }
+        .timeline-content {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+        .timeline-content h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .battle-card {
+            background: var(--navy);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin: 24px 0;
+        }
+        .battle-card-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .battle-card-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--blue-mid);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .battle-card-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .battle-card-step:last-child { border-bottom: none; }
+        .battle-card-num {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(77,163,232,0.2);
+            color: var(--blue-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .battle-card-body { flex: 1; }
+        .battle-card-body h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .battle-card-body p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+            margin: 0;
+        }
+        .battle-card-body .bc-script {
+            font-style: italic;
+            color: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.06);
+            padding: 10px 14px;
+            border-radius: var(--radius-xs);
+            margin-top: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .battle-card-body .bc-if {
+            color: var(--blue-mid);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--off-white); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray-300); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+    <div class="logo">
+        <div class="logo-icon">S</div>
+        Soft<span>Skillet</span>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()">&#9776;</button>
+    <nav class="nav-tabs" id="navTabs">
+        <button class="nav-tab active" onclick="showPage('playbook', this)">Playbook</button>
+        <button class="nav-tab" onclick="showPage('tools', this)">Tools</button>
+        <button class="nav-tab" onclick="showPage('leads', this)">Leads</button>
+        <button class="nav-tab" onclick="showPage('email', this)">Email Generator</button>
+    </nav>
+</header>
+
+<main class="main">
+
+<!-- ==================== PLAYBOOK PAGE ==================== -->
+<div id="page-playbook" class="page active">
+
+    <div class="hero">
+        <h1>Event Playbook</h1>
+        <p>The complete system for generating maximum pipeline from in-person events. Every recommendation grounded in real conversations from the NYC Restaurant Show.</p>
+    </div>
+
+    <!-- FUNNEL ANALYSIS -->
+    <h2><span class="phase-dot" style="background:var(--red);"></span> NYC Show Funnel Analysis</h2>
+
+    <div class="metrics-row">
+        <div class="metric-card"><div class="metric-value">10</div><div class="metric-label">Conversations</div></div>
+        <div class="metric-card"><div class="metric-value">7</div><div class="metric-label">ICP Match</div></div>
+        <div class="metric-card"><div class="metric-value">6</div><div class="metric-label">Strong Interest</div></div>
+        <div class="metric-card"><div class="metric-value">3</div><div class="metric-label">Demo-Ready*</div></div>
+        <div class="metric-card"><div class="metric-value" style="color:var(--red)">1</div><div class="metric-label">Demo Locked</div></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">The Bottleneck</h3>
+        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">The pipeline doesn't break at interest — it breaks at conversion to scheduled demos. 6 prospects expressed strong interest. Only 1 left with a locked next step (Daljeet: "call me tomorrow"). That's a <strong>17% conversion rate from interest to demo.</strong> The fix isn't better pitching — it's better closing mechanics.</p>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px"><strong>*Demo-ready</strong> = prospect who (1) is ICP, (2) expressed clear interest in a specific product, and (3) could have been converted to a scheduled demo with better closing mechanics. The 3 demo-ready prospects: <strong>Dee</strong> (asked to bring Daniel into a demo), <strong>Daljeet</strong> (said "call me tomorrow"), and <strong>Orla</strong> (said the product was "amazing" but was let go with a vague next step).</p>
+        <div class="funnel-bar-container">
+            <div class="funnel-step"><div class="funnel-step-label">Conversations</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:100%;background:var(--navy)">10</div></div><div class="funnel-drop"></div></div>
+            <div class="funnel-step"><div class="funnel-step-label">ICP Match</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:70%;background:var(--blue-bright)">7</div></div><div class="funnel-drop">-30%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">Strong Interest</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:60%;background:var(--green)">6</div></div><div class="funnel-drop">-14%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">Demo-Ready</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:30%;background:var(--yellow)">3</div></div><div class="funnel-drop">-50%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">Demo Scheduled</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:10%;background:var(--red)">1</div></div><div class="funnel-drop">-67%</div></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:13px"><strong>Key drops:</strong> Interest → Demo-Ready loses 50% (pitch sequencing issues — right product, wrong order). Demo-Ready → Scheduled loses 67% (weak closes — accepting "email me info" instead of locking calendar).</p>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">Pipeline Math: What This Event Should Have Produced</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0;">
+            <div style="background:var(--gray-50);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+                <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:12px;">Working Assumptions*</div>
+                <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
+                    Lead → Demo: <strong style="color:var(--navy)">~20%</strong><br>
+                    Demo → Pilot: <strong style="color:var(--navy)">~25%</strong><br>
+                    Pilot → Deal: <strong style="color:var(--navy)">~40%</strong>
+                </div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.4;">*Reasonable SaaS event benchmarks based on typical restaurant-tech sales cycles. Actual rates vary by segment and deal size.</div>
+            </div>
+            <div style="background:var(--red-light);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+                <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--red);margin-bottom:12px;">NYC Show (Actual)</div>
+                <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
+                    7 ICP leads → <strong style="color:var(--red)">1 demo</strong><br>
+                    Lead → Demo: <strong style="color:var(--red)">14%</strong><br>
+                    Expected deals: <strong style="color:var(--red)">~0.1</strong>*
+                </div>
+            </div>
+            <div style="background:var(--green-light);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+                <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:12px;">With This Playbook</div>
+                <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
+                    7 ICP leads → <strong style="color:var(--green)">3-4 demos</strong><br>
+                    Lead → Demo: <strong style="color:var(--green)">40-50%</strong><br>
+                    Expected deals: <strong style="color:var(--green)">~0.3</strong>
+                </div>
+            </div>
+        </div>
+        <p style="color:var(--text-muted);font-size:13px;margin-top:8px"><strong>The math:</strong> With current benchmark conversion rates, 7 qualified leads should yield: 7 × 0.20 (lead→demo) × 0.25 (demo→pilot) × 0.40 (pilot→deal) = <strong>0.14 expected deals.</strong> With this playbook targeting 40–50% lead-to-demo conversion: 7 × 0.45 × 0.25 × 0.40 = <strong>0.32 expected deals</strong> — roughly 2–3× more expected deal output from the same event investment.</p>
+    </div>
+
+    <!-- ICP SCORING -->
+    <div class="card">
+        <h3 style="margin-top:0">ICP Scoring Framework</h3>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px">Score every booth conversation to prioritize follow-up and allocate rep time. Prospects scoring 7+ are Tier 1 follow-ups.</p>
+        <div class="table-wrap"><table>
+            <tr><th>Factor</th><th>Points</th><th>Why It Matters</th></tr>
+            <tr><td>Takes reservations (full-service dining)</td><td style="text-align:center"><strong>2</strong></td><td>Must-have. No reservations = not ICP (Danikkah scored 0).</td></tr>
+            <tr><td>Currently on OpenTable or Resy</td><td style="text-align:center"><strong>2</strong></td><td>Active displeasure with incumbents is our primary wedge.</td></tr>
+            <tr><td>Decision-maker or armed champion present</td><td style="text-align:center"><strong>2</strong></td><td>Without a path to the buyer, pipeline stalls (Karin scored 0).</td></tr>
+            <tr><td>Existing Soft Skillet relationship (review app)</td><td style="text-align:center"><strong>2</strong></td><td>Pre-built trust. 2 of 3 review users cited it as reason to consider. This is our unfair advantage.</td></tr>
+            <tr><td>Demand volatility pain (slow nights)</td><td style="text-align:center"><strong>1</strong></td><td>Direct Smooth Revenue fit — highest-converting pitch.</td></tr>
+            <tr><td>Multi-location (2+)</td><td style="text-align:center"><strong>1</strong></td><td>Higher deal value. Enterprise accounts justify more rep time.</td></tr>
+        </table></div>
+
+        <h3>NYC Show Scored</h3>
+        <div class="table-wrap"><table class="icp-score-table">
+            <tr><th>Prospect</th><th>Reserv.</th><th>OT/Resy</th><th>DM Path</th><th>Review App</th><th>Volatility</th><th>Multi-Loc</th><th>Score</th><th>Tier</th></tr>
+            <tr><td><strong>Dee / Dinex</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
+            <tr><td><strong>Brian / BJ's</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
+            <tr><td><strong>Daljeet / Masala King</strong></td><td>2</td><td>0</td><td>2</td><td>2</td><td>1</td><td>0</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
+            <tr><td><strong>Elizabeth Murray</strong></td><td>2</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
+            <tr><td><strong>Frantz / Rustik</strong></td><td>2</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>5</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
+            <tr><td><strong>Orla / Felice 64</strong></td><td>2</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>5</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
+            <tr><td><strong>Fabiola / Coszcal</strong></td><td>2</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td><strong>4</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
+            <tr><td style="color:var(--text-muted)">Kelly / USHG</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td><span class="badge badge-cool">Pain ≠ product</span></td></tr>
+            <tr><td style="color:var(--text-muted)">Karin / Le Bernardin</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td><span class="badge badge-cool">Wrong person</span></td></tr>
+            <tr><td style="color:var(--text-muted)">Danikkah / Taco Mahal</td><td>0</td><td>0</td><td>2</td><td>2</td><td>0</td><td>0</td><td>4</td><td><span class="badge badge-no">Not ICP</span></td></tr>
+        </table></div>
+        <p style="color:var(--text-muted);font-size:13px;margin-top:12px"><strong>Insight:</strong> Danikkah's 4 points does not mean "reservations ICP" — it means "commercially valuable lead for Soft Skillet overall." Her review app relationship (2 pts) and decision-maker status (2 pts) make her a high-value cross-sell lead. The score correctly flags her for internal handoff, not discard. This is by design: the framework scores company-wide value, not just reservations fit.</p>
+    </div>
+
+    <!-- GROWTH LOOP INSIGHT -->
+    <div class="insight-box">
+        <h3>The Core Insight: Review App → Reservations Growth Loop</h3>
+        <p>3 of 10 booth visitors were existing review app users (Daljeet, Danikkah, Elizabeth). Of those 3, <strong>2 explicitly cited their trust in the review product as the reason they were open to the reservations pitch:</strong></p>
+        <p>Daljeet: <em>"I already trust your company from the other app."</em><br>Elizabeth: <em>"Your review product has been so fantastic... it's earned you a lot of trust. I'm willing to bet you've gotten reservations right too."</em></p>
+        <p><strong>This is Soft Skillet's unfair advantage.</strong> No competitor has a pre-existing trust relationship with tens of thousands of restaurant operators. The review app isn't just a separate product — it's the top of a conversion funnel. The strategic play:</p>
+        <p><strong>1. Pre-event:</strong> Pull review app users near every event's geography. These are automatic Tier 1 targets — they already know and trust us.<br>
+        <strong>2. At the booth:</strong> Move faster with review users. They don't need the Operator pitch — they've already experienced the culture. Go straight to Smooth Revenue or AI Seating.<br>
+        <strong>3. At scale:</strong> Build an in-app pathway from the review product to reservations discovery. Every review app DAU is a warm lead for reservations. This is the real growth loop.</p>
+    </div>
+
+    <!-- PHASE 1 -->
+    <h2><span class="phase-dot" style="background:var(--blue-bright);"></span> Phase 1 — Pre-Event</h2>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-pre">Pre</span> Build a Tiered Target List</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p>Don't show up and hope the right people walk by. Work the attendee list in advance and tier every known prospect.</p>
+            <div class="table-wrap"><table>
+                <tr><th>Tier</th><th>Definition</th><th>Pre-Event Action</th></tr>
+                <tr><td><span class="badge badge-hot">Tier 1</span></td><td>Enterprise groups, known dissatisfaction, existing Soft Skillet relationship, warm referral</td><td>Personalized 1:1 outreach to book a 15-min booth meeting</td></tr>
+                <tr><td><span class="badge badge-warm">Tier 2</span></td><td>Mid-market operators, likely ICP fit, no prior relationship</td><td>Batch outreach with event-specific hook</td></tr>
+                <tr><td><span class="badge badge-cool">Tier 3</span></td><td>Unknown — walk-ups</td><td>Handle with qualification framework at booth</td></tr>
+            </table></div>
+            <p><strong>For Tier 1 accounts, build a one-page brief:</strong> current platform, locations, Soft Skillet touchpoints (review app user?), recent press, attendees + roles. Three NYC show prospects were review app users — two cited existing trust as the reason they were open to the reservations pitch.</p>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-pre">Pre</span> Pitch Certification</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p>Every rep must deliver all three pitches fluently and deploy based on buyer pain — not personal preference. <strong>Leading with AI Seating by default was one of the clearest repeated failures at the NYC show.</strong></p>
+            <div class="table-wrap"><table>
+                <tr><th>Pitch</th><th>Core Message</th><th>Lead When Buyer Says...</th></tr>
+                <tr><td><strong style="color:var(--orange)">Operator</strong></td><td>"Built by restaurateurs who lived your pain."</td><td>"Nobody understands us" / "Tech feels like a lab product" / "Want a real partner"</td></tr>
+                <tr><td><strong style="color:var(--green)">Smooth Revenue</strong></td><td>"We guarantee minimum guest count. If we're wrong, we pay you."</td><td>"Can't predict demand" / "Slow Tuesdays killing me" / "Guessing on staffing"</td></tr>
+                <tr><td><strong style="color:var(--blue-bright)">AI Seating</strong></td><td>"A smart assistant for your host — right party, right table, right time."</td><td>"Leaving money on the table" / "Floor feels inefficient"</td></tr>
+            </table></div>
+
+            <h3>Interactive Pitch Matcher</h3>
+            <p>Practice matching buyer pain to the correct pitch:</p>
+            <div class="matcher-container">
+                <div class="matcher-prompt">The buyer says:</div>
+                <div class="pain-options">
+                    <button class="pain-btn" onclick="showMatch(this, 'smooth')">"Our weekends are great but Monday through Wednesday is a coin flip. I threw out $800 in produce last Tuesday."</button>
+                    <button class="pain-btn" onclick="showMatch(this, 'operator')">"We submit a support ticket and it goes into a black hole. They sold us features that don't work."</button>
+                    <button class="pain-btn" onclick="showMatch(this, 'ai')">"We have tables open but they're the wrong size for the people waiting. We could do more volume."</button>
+                    <button class="pain-btn" onclick="showMatch(this, 'exit')">"We're fast-casual counter-service. No reservations. Biggest problem is managing takeout."</button>
+                </div>
+                <div class="matcher-result" id="match-smooth" style="background:var(--green-light);">
+                    <h4 style="color:var(--green);">Lead with: Smooth Revenue</h4>
+                    <div class="script">"I hear you — that uncertainty is exhausting. We built something specifically for that. We guarantee a minimum number of guests on your slower nights. If our prediction is wrong, we pay you the difference. Budget produce and staff from a real number."</div>
+                    <div class="layer-info">Then layer: Operator (empathy) → AI Seating (if floor issues mentioned)</div>
+                </div>
+                <div class="matcher-result" id="match-operator" style="background:var(--orange-light);">
+                    <h4 style="color:var(--orange);">Lead with: Operator</h4>
+                    <div class="script">"That's the exact reason our founders started this company. They were restaurant operators who felt the same way. Our support team is staffed by former GMs and FOH managers. When you call us, you talk to someone who's lived a Saturday night service."</div>
+                    <div class="layer-info">Then layer: Smooth Revenue or AI Seating based on operational pain</div>
+                </div>
+                <div class="matcher-result" id="match-ai" style="background:var(--blue-light);">
+                    <h4 style="color:var(--blue-bright);">Lead with: AI Seating (plain language)</h4>
+                    <div class="script">"Imagine a smart assistant for your host. It knows Fridays bring four-tops, Tuesdays are couples. So it holds a six-top for ten minutes when a larger party is likely — rather than giving it to a two-person walk-in. Like playing perfect Tetris every night."</div>
+                    <div class="layer-info">Then layer: Operator (credibility) → Smooth Revenue (if midweek pain)</div>
+                </div>
+                <div class="matcher-result" id="match-exit" style="background:var(--gray-50);">
+                    <h4 style="color:var(--text-muted);">Not ICP — Exit gracefully in 3 minutes</h4>
+                    <div class="script">"Our reservations product isn't the right tool for that. I don't want to waste your time. Can I grab your email? And — do you use our review app? I'll personally connect you with that team."</div>
+                    <div class="layer-info">Capture info. Warm internal handoff within 24 hrs. Never send to a website form.</div>
+                </div>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-pre">Pre</span> Materials & KPIs</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p><strong>Materials:</strong> One-pagers per pitch, quantified case studies (the NYC show had zero ROI numbers), scheduling QR code, lead capture form on tablet, business cards.</p>
+            <div class="table-wrap"><table>
+                <tr><th>KPI</th><th>Target</th></tr>
+                <tr><td>Substantive conversations / rep / day</td><td>8-12</td></tr>
+                <tr><td>Demos scheduled / rep / day</td><td>3-5</td></tr>
+                <tr><td>Non-ICP conversations &gt;5 min</td><td>0-1 per rep/day</td></tr>
+                <tr><td>Cross-sell leads captured</td><td>100%</td></tr>
+            </table></div>
+        </div></div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <h2><span class="phase-dot" style="background:var(--orange);"></span> Phase 2 — During the Event</h2>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-during">During</span> First 90 Seconds: Qualify Before You Pitch</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p>First 90 seconds = almost entirely the buyer talking. Two questions:</p>
+            <div class="script">"What brought you to the show this year?"<br><br>"What's the biggest challenge you're trying to solve right now?"</div>
+            <p><strong>The power of mirroring:</strong> When Daljeet said <em>"the rollercoaster is killing me,"</em> John reflected: <em>"It's the uncertainty, right?"</em> Daljeet lit up: <em>"Exactly!"</em> Before you pitch, prove you heard them.</p>
+            <p><strong>Bad discovery:</strong> Brian said <em>"we want a better partner."</em> Sam responded with <em>"AI-driven optimization engine that maximizes per-person-average."</em> The buyer asked for empathy. He got a feature spec.</p>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-during">During</span> Handle Objections</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <div class="objection-tabs">
+                <button class="objection-tab active" onclick="showObjection(0, this)">"AI replaces my hosts"</button>
+                <button class="objection-tab" onclick="showObjection(1, this)">"System is fine"</button>
+                <button class="objection-tab" onclick="showObjection(2, this)">"Switching is too big"</button>
+                <button class="objection-tab" onclick="showObjection(3, this)">"Need boss approval"</button>
+            </div>
+            <div class="objection-panel active" id="obj-0">
+                <p><strong>Brian Krakower:</strong> <em>"I'm skeptical about taking control away from our hosts."</em></p>
+                <div style="margin-top:12px"><div class="answer-label bad">Wrong (what happened):</div>
+                <div class="script" style="border-left-color:var(--red)">"It's definitely a tool for the hosts! It makes their lives easier."</div></div>
+                <div style="margin-top:12px"><div class="answer-label good">Right:</div>
+                <div class="script" style="border-left-color:var(--green)">"The system doesn't replace your hosts — it's a copilot. Think of it whispering: 'Table 12 might be worth holding ten minutes — high chance a four-top is coming.' Your host still makes the call. Still greets regulars, reads the room. We just give them better information."</div></div>
+            </div>
+            <div class="objection-panel" id="obj-1">
+                <p><strong>Kelly MacPherson:</strong> <em>"We've been with Resy and it's... fine."</em></p>
+                <div style="margin-top:12px"><div class="answer-label good">Right:</div>
+                <div class="script" style="border-left-color:var(--green)">"'Fine' is interesting. Usually it means the system checks a box but doesn't feel like a partner. It doesn't actively make your business better — it just exists. Is that close?"</div></div>
+            </div>
+            <div class="objection-panel" id="obj-2">
+                <p><strong>Brian Krakower:</strong> <em>"Changing systems for our size is a big operation."</em></p>
+                <div style="margin-top:12px"><div class="answer-label good">Right:</div>
+                <div class="script" style="border-left-color:var(--green)">"We'd never propose flipping a switch across 200 locations overnight. Our best partners start with a 3-5 location pilot, 60 days, real data from your restaurants. No risk, no disruption — you decide based on your numbers, not our slides."</div></div>
+            </div>
+            <div class="objection-panel" id="obj-3">
+                <p><strong>Most common objection at events (Dee, Orla, Elizabeth, Karin).</strong></p>
+                <div style="margin-top:12px"><div class="answer-label bad">Wrong (Convo 10):</div>
+                <div class="script" style="border-left-color:var(--red)">"It's probably more efficient if we just get him on the call..." → Buyer shut down. Went from "amazing" to "I guess."</div></div>
+                <div style="margin-top:12px"><div class="answer-label good">Right:</div>
+                <div class="script" style="border-left-color:var(--green)">"That makes total sense — you should see it first. Let's do a 20-minute demo for you, and if it's a fit, I'll help you build a summary for [name]. Then we set up a second call together."</div></div>
+                <p style="margin-top:12px"><strong>Rule: Arm the champion. Never bypass them.</strong></p>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-during">During</span> Competitive Intel: OpenTable vs. Resy</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <div class="competitive-toggle">
+                <button class="active" onclick="showCompetitor('ot', this)">vs. OpenTable</button>
+                <button onclick="showCompetitor('resy', this)">vs. Resy</button>
+            </div>
+            <div class="competitive-panel active" id="comp-ot">
+                <div class="intel-card"><strong>Feels outdated</strong><div class="complaint">Dee: "Built by people in a lab." Orla: "Hasn't changed in five years."</div><div class="angle"><strong>Lead: Operator.</strong> Built by people who've worked Saturday service. Contrast iteration speed.</div></div>
+                <div class="intel-card"><strong>Poor support</strong><div class="complaint">Orla: "Just another account number."</div><div class="angle"><strong>Operator + support model.</strong> "Former GMs and FOH managers on our support team."</div></div>
+            </div>
+            <div class="competitive-panel" id="comp-resy">
+                <div class="intel-card"><strong>Support black hole</strong><div class="complaint">Brian: "Support ticket goes into a black hole." Frantz: "Nothing happens."</div><div class="angle"><strong>Lead: Operator + anchor story.</strong> "A partner told us Resy pushed a mandatory update at 6 PM on a Friday. Broke his floor map. No human for two hours."</div></div>
+                <div class="intel-card"><strong>Nickel-and-diming</strong><div class="complaint">Frantz: "They nickel-and-dime you for everything."</div><div class="angle"><strong>Value density, not price.</strong> "Everything I described is included. No add-on fees for standard features." Never discount unprompted.</div></div>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-during">During</span> Closing: The Last 60 Seconds</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p><strong>Where the NYC show left the most pipeline on the table.</strong> Good 8-minute conversations ended with "I'll email you info."</p>
+            <div class="mistake-item" style="border-left:4px solid var(--navy)"><div class="mistake-num mistake-num-accent">1</div><div class="mistake-content"><div class="mistake-title">Restate their pain in their words</div><div class="mistake-desc">"So the biggest thing for you is [their exact language]."</div></div></div>
+            <div class="mistake-item" style="border-left:4px solid var(--navy)"><div class="mistake-num mistake-num-accent">2</div><div class="mistake-content"><div class="mistake-title">Bridge to personalized next step</div><div class="mistake-desc">"Best way to see this is a 20-minute demo for [restaurant name]."</div></div></div>
+            <div class="mistake-item" style="border-left:4px solid var(--navy)"><div class="mistake-num mistake-num-accent">3</div><div class="mistake-content"><div class="mistake-title">Binary choice of times</div><div class="mistake-desc">"Tuesday at 2 or Thursday at 10 — which works?"</div></div></div>
+            <div class="mistake-item" style="border-left:4px solid var(--navy)"><div class="mistake-num mistake-num-accent">4</div><div class="mistake-content"><div class="mistake-title">If they resist → calendar link on the spot</div><div class="mistake-desc">Pull out your phone. Send while standing there. Materially increases booking rate vs. "I'll follow up later."</div></div></div>
+            <div class="mistake-item" style="border-left:4px solid var(--navy)"><div class="mistake-num mistake-num-accent">5</div><div class="mistake-content"><div class="mistake-title">Floor: confirm email + specific follow-up in 24 hrs</div><div class="mistake-desc">"I'll send you a note tomorrow about the Tuesday predictability problem." Minimum — not the goal.</div></div></div>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-during">During</span> 10 Mistakes to Avoid (All Real)</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">1</div><div class="mistake-content"><div class="mistake-title">Defaulting to one pitch</div><div class="mistake-desc">Sam led AI Seating in 4/5 conversations. Elizabeth said "predictability" and got seating.</div><div class="mistake-fix">Fix: Pain determines pitch. Drill matching framework.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">2</div><div class="mistake-content"><div class="mistake-title">Jargon overload</div><div class="mistake-desc">"AI-driven optimization engine." Fabiola thought we'd rearrange furniture nightly.</div><div class="mistake-fix">Fix: "Smart assistant for your host" + Tetris analogy. Always.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">3</div><div class="mistake-content"><div class="mistake-title">Accepting brush-offs as next steps</div><div class="mistake-desc">"Email me info" / "Reach out next month" / "I'll look into it."</div><div class="mistake-fix">Fix: These are polite exits. Use the 5-step close.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">4</div><div class="mistake-content"><div class="mistake-title">Bypassing the champion</div><div class="mistake-desc">Sam pushed past enthusiastic Orla to reach her Director. She went from "amazing" to "I guess."</div><div class="mistake-fix">Fix: Arm the champion. Demo with them first.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">5</div><div class="mistake-content"><div class="mistake-title">Pitching non-ICP for 10+ minutes</div><div class="mistake-desc">"We don't take reservations" + "no waitlist." Sam kept pitching.</div><div class="mistake-fix">Fix: 3-minute rule. Two disqualifiers = exit gracefully.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">6</div><div class="mistake-content"><div class="mistake-title">Missing the cross-sell</div><div class="mistake-desc">Review app user wanted help with that product. Sent to website form.</div><div class="mistake-fix">Fix: Capture info. Make internal handoff yourself.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">7</div><div class="mistake-content"><div class="mistake-title">Premature discounting</div><div class="mistake-desc">Offered BJ's (~200 locations) a discount before pricing was even discussed.</div><div class="mistake-fix">Fix: Never mention discounts until buyer raises price as barrier.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">8</div><div class="mistake-content"><div class="mistake-title">Pitching when pain doesn't match</div><div class="mistake-desc">Kelly's #1 pain was takeout/delivery. John pitched reservations the full conversation.</div><div class="mistake-fix">Fix: Acknowledge mismatch. Qualify out. Free booth time.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">9</div><div class="mistake-content"><div class="mistake-title">No quantified ROI</div><div class="mistake-desc">Zero specific numbers across 10 conversations. Every pitch stayed conceptual.</div><div class="mistake-fix">Fix: Memorize 1 proof point per pitch.</div></div></div>
+            <div class="mistake-item"><div class="mistake-num mistake-num-red">10</div><div class="mistake-content"><div class="mistake-title">Staying philosophical</div><div class="mistake-desc">Sam + Frantz spent most of the time on shared values without product specifics.</div><div class="mistake-fix">Fix: After 2-3 min rapport, transition to product.</div></div></div>
+        </div></div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <h2><span class="phase-dot" style="background:var(--green);"></span> Phase 3 — Post-Event</h2>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-post">Post</span> Follow-Up Tiers & Timing</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <div class="table-wrap"><table>
+                <tr><th>Temp</th><th>Action</th><th>Deadline</th></tr>
+                <tr><td><span class="badge badge-hot">Hot</span></td><td>Confirm calendar. If they said "call me," call.</td><td>12 hours</td></tr>
+                <tr><td><span class="badge badge-warm">Warm</span></td><td>Personalized email + calendar link</td><td>24 hours</td></tr>
+                <tr><td><span class="badge badge-cool">Cool</span></td><td>Lighter email + one-pager</td><td>48 hours</td></tr>
+            </table></div>
+            <p><strong>Email rules:</strong> Under 120 words. Subject = their pain. No attachments first email. No "just circling back." No discounts.</p>
+        </div></div>
+    </div>
+
+    <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="tag tag-post">Post</span> Debrief & ROI Measurement</div>
+            <svg class="accordion-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body"><div class="accordion-content">
+            <p><strong>60-minute debrief within 48 hours.</strong> Pipeline review → Pitch effectiveness → Rep coaching → Process improvements.</p>
+            <div class="table-wrap"><table>
+                <tr><th>Metric</th><th>NYC Baseline</th><th>Target</th></tr>
+                <tr><td>Demo conversion rate</td><td>~20%</td><td>40-50%</td></tr>
+                <tr><td>Hot leads</td><td>2</td><td>4-6</td></tr>
+                <tr><td>Non-ICP time wasted</td><td>~20 min</td><td>&lt;10 min</td></tr>
+                <tr><td>Cross-sell capture</td><td>0%</td><td>100%</td></tr>
+            </table></div>
+        </div></div>
+    </div>
+
+    <!-- BATTLE CARD -->
+    <h2>Rep Battle Card</h2>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">The step-by-step script for every booth conversation. Print for each rep.</p>
+    <div class="battle-card">
+        <div class="battle-card-header"><h3>BOOTH CONVERSATION BATTLE CARD</h3></div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">1</div>
+            <div class="battle-card-body">
+                <h4>Qualify (0:00 - 1:30)</h4>
+                <div class="bc-script">"Hey, welcome. I'm [name] with Soft Skillet. What brought you to the show this year?"<br><br>"What's the biggest challenge you're trying to solve right now?"</div>
+                <p style="margin-top:8px">Listen. Don't pitch. Note their exact words — you'll use them in the close and the follow-up email. Identify: Are they ICP? Are they the decision-maker?</p>
+                <div class="bc-if">If not ICP → skip to Step 6</div>
+            </div>
+        </div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">2</div>
+            <div class="battle-card-body">
+                <h4>Diagnose Pain (1:30 - 2:30)</h4>
+                <p>Mirror their pain back in sharper language.</p>
+                <div class="bc-script">"So it's not just the slow nights — it's the uncertainty. Not knowing if you should staff for 20 or 60."</div>
+                <p style="margin-top:8px">This proves you listened. It also clarifies the pain, which tells you which pitch to lead with.</p>
+                <div class="bc-if">Predictability → Smooth Revenue &nbsp;|&nbsp; Vendor frustration → Operator &nbsp;|&nbsp; Floor efficiency → AI Seating</div>
+            </div>
+        </div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">3</div>
+            <div class="battle-card-body">
+                <h4>Match Feature (2:30 - 4:00)</h4>
+                <p>Deliver the lead pitch in 60 seconds. Plain language only. Include one proof point.</p>
+                <div class="bc-script">"We guarantee a minimum number of guests on your slower nights. If our prediction is wrong, we pay you the difference. One of our partners reduced midweek food waste by 30% in the first 60 days."</div>
+                <p style="margin-top:8px">If they're a review app user, acknowledge it: <em>"Since you already know how we operate, I think this will feel familiar."</em></p>
+            </div>
+        </div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">4</div>
+            <div class="battle-card-body">
+                <h4>Handle Objections (4:00 - 5:30)</h4>
+                <p>Address concerns. Layer a second pitch if relevant. If they say "I need to run this by [boss]" — arm them, don't bypass them.</p>
+                <div class="bc-if">"AI replaces hosts" → "It's a copilot, not a replacement" &nbsp;|&nbsp; "Current system is fine" → "Fine isn't great — what's missing?" &nbsp;|&nbsp; "Too big a switch" → "Start with a 3-5 location pilot"</div>
+            </div>
+        </div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">5</div>
+            <div class="battle-card-body">
+                <h4>Schedule Demo (5:30 - 7:00)</h4>
+                <p>This is the goal. Every conversation must reach this step.</p>
+                <div class="bc-script">"The best way to see this is a 20-minute demo tailored to [restaurant name]. I've got Tuesday at 2 or Thursday at 10 — which works?"</div>
+                <p style="margin-top:8px">If they resist → calendar link on the spot. If champion → schedule their demo first, stakeholder meeting as step 2.</p>
+                <div class="bc-if">No commit → confirm email, promise specific follow-up in 24 hrs. This is the floor, not the goal.</div>
+            </div>
+        </div>
+        <div class="battle-card-step">
+            <div class="battle-card-num">6</div>
+            <div class="battle-card-body">
+                <h4>Not ICP → Graceful Exit (if reached from Step 1)</h4>
+                <div class="bc-script">"Our reservations product isn't the right fit for that challenge. But I'd love to stay connected. Do you use our review app? I'll personally connect you with that team."</div>
+                <p style="margin-top:8px">Capture contact info. Make warm internal handoff within 24 hrs. Never send to a website form. Max 3 minutes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TACTICAL FOLLOW-UP PLANS -->
+    <h2>Tactical Follow-Up: Top 3 Accounts</h2>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Day-by-day execution plans for the three highest-scoring accounts from the NYC show.</p>
+
+    <div class="card">
+        <h3 style="margin-top:0;color:var(--red)">1. Daljeet Masala — Masala King <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Single-location independent. Paper/phone reservations. Review app user. Said "call me tomorrow." Highest urgency lead.</p>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Call him (as promised)</h4><p>Do not email first. He said call, so call. This is a trust test — he's watching to see if Soft Skillet follows through the way the review team does. On the call: don't re-pitch. Move to onboarding mechanics. "Let's get you set up. Here's what the first week looks like."</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 2</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Send onboarding checklist</h4><p>What data Soft Skillet needs (hours, historical covers if available). Set expectations on Smooth Revenue guarantee: how it's calculated, when it kicks in, payout process. He's moving from paper — make migration feel simple.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 7</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Go-live check-in</h4><p>Confirm system is working. Walk through the first Smooth Revenue forecast. Assign dedicated support contact — white-glove experience here turns him into a referral source for other independents.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 30</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>First results review</h4><p>Review first month of data. Did the guarantee land correctly? How did midweek covers compare to pre-Soft Skillet? This becomes a case study for the Smooth Revenue pitch at the next event.</p></div></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0;color:var(--red)">2. Dee Inthamat — The Dinex Group <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Enterprise (Daniel Boulud's group, 10+ locations). OpenTable. Dee requested demo with Daniel. Marquee logo opportunity.</p>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Personalized email to Dee</h4><p>Reference: "built by restaurant guys" moment that resonated. Propose 2-3 demo times. Ask: "Would it make sense to include Daniel, or would you prefer to preview first?" Give her agency over how Daniel is involved.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 2</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Build Dinex-specific demo</h4><p>Pull data on their portfolio. Show how Smooth Revenue applies to lower-traffic locations, AI Seating optimizes high-volume spots (Daniel, Bar Boulud). Frame around their scale — this isn't a single-restaurant pitch.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 7</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Demo with Dee (± Daniel)</h4><p>If Dee previews alone: immediately schedule second session with Daniel. Provide her a one-page internal summary to forward. Make it easy for her to champion internally.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 14</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Stakeholder meeting or pilot proposal</h4><p>Present 3-5 location pilot framework. Identify all stakeholders (Dee, Daniel, CFO/VP Ops). Map the buying process. Enterprise = multi-month cycle. Don't rush, but don't lose momentum.</p></div></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0;color:var(--red)">3. Brian Krakower — BJ's Restaurant & Brewhouse <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">~200-location chain. CIO. Resy. Referred by Maria Chen (existing champion). <strong>I selected Brian not because he showed the strongest near-term conversion signal</strong> — Orla was more enthusiastic — <strong>but because a 200-location chain represents the single highest-value account in this pipeline.</strong> Even at a lower conversion probability, the expected value justifies top-3 prioritization and a longer, partnership-first sales motion.</p>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Reframe email — lead with partnership, not features</h4><p>Do NOT lead with AI Seating. Lead with what Brian asked for: trust and support. "Maria's been an incredible partner for us. I'd love to show you why." Propose a partnership conversation, not a product demo. Do NOT mention discounts.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 3</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Activate the Maria Chen reference</h4><p>Ask Maria if she'd be willing to have a brief call with Brian. A peer reference from someone he already trusts is more powerful than any demo. Send Brian a one-pager addressing his AI concern: "how AI Seating works alongside hosts, not instead of them."</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 7</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Partnership conversation (30 min)</h4><p>Not a product demo. Let Brian ask about support SLAs, implementation, account management. This is the conversation he wanted at the booth but didn't get. End with: "What would the evaluation process look like on your end?"</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 14</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Pilot proposal</h4><p>3-5 locations, 60 days, real data. Map internal stakeholders (CIO → VPs → Regional Directors → GMs). Enterprise buying process — Brian has budget authority but needs ops buy-in for rollout.</p></div></div>
+    </div>
+
+    <!-- QUICK REF -->
+    <h2>Quick-Reference Card</h2>
+    <div class="quick-ref">
+        <div class="qr-title">BOOTH QUICK REFERENCE</div>
+        <div class="qr-section"><div class="qr-label">OPEN (let them talk):</div><ul><li>"What brought you to the show?"</li><li>"What's the biggest challenge right now?"</li><li>Mirror their pain back before pitching.</li></ul></div>
+        <div class="qr-section"><div class="qr-label">MATCH (pain → pitch):</div><ul><li>Unpredictable demand → SMOOTH REVENUE</li><li>Tech frustration / want partner → OPERATOR</li><li>Floor inefficiency → AI SEATING (plain language)</li><li>Outside product scope → Qualify out in 3 min</li></ul></div>
+        <div class="qr-section"><div class="qr-label">CLOSE:</div><ul><li>Restate pain in their words</li><li>"20-min demo for [restaurant name]"</li><li>"Tuesday at 2 or Thursday at 10?"</li><li>No commit → calendar link on the spot</li><li>Floor: confirm email, follow up in 24 hrs</li></ul></div>
+        <div class="qr-section"><div class="qr-label">NEVER:</div><ul class="qr-never"><li>Lead with jargon</li><li>Pitch product that doesn't match pain</li><li>Accept "email me info" as a win</li><li>Skip champion to reach decision-maker</li><li>Offer discount before asked</li><li>Send anyone to a website form</li></ul></div>
+    </div>
+
+    <!-- DRILLS -->
+    <h2>Certification Drills</h2>
+    <div class="roleplay-card"><h3>Scenario 1 — Predictability Problem</h3><div class="buyer-says">"Weekends are great. Monday-Wednesday is a coin flip. Threw out $800 in produce. Six servers standing around."</div><button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button><div class="roleplay-answer answer-correct"><div class="answer-label good">Correct: SMOOTH REVENUE</div><p>Mirror emotional pain, deliver guarantee. Do NOT mention AI Seating first.</p></div></div>
+    <div class="roleplay-card"><h3>Scenario 2 — Frustrated Operator</h3><div class="buyer-says">"On Resy, fed up. Support is nonexistent. Features don't work. Just want someone who gets it."</div><button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button><div class="roleplay-answer answer-correct"><div class="answer-label good">Correct: OPERATOR</div><p>Founder story + anchor story (Friday 6PM update). Do NOT lead with AI Seating.</p></div></div>
+    <div class="roleplay-card"><h3>Scenario 3 — Floor Optimizer</h3><div class="buyer-says">"Dining room feels inefficient. Wrong tables for people waiting. Could do more volume."</div><button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button><div class="roleplay-answer answer-correct"><div class="answer-label good">Correct: AI SEATING (plain language)</div><p>"Smart assistant for your host" + Tetris analogy. NOT "AI-driven optimization engine."</p></div></div>
+    <div class="roleplay-card"><h3>Scenario 4 — Non-ICP</h3><div class="buyer-says">"Fast-casual counter-service. No reservations. No host. Line out the door. Problem is takeout."</div><button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button><div class="roleplay-answer answer-correct"><div class="answer-label good">NOT ICP — Exit in 3 min</div><p>Acknowledge mismatch. Ask about review app. Capture info for handoff.</p></div></div>
+    <div class="roleplay-card"><h3>Scenario 5 — The Champion</h3><div class="buyer-says">"This sounds amazing. If it looks good, I'll run it by my Director of Ops."</div><button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button><div class="roleplay-answer answer-correct"><div class="answer-label good">ARM THE CHAMPION</div><p>Demo with them first. Help build internal case. Schedule stakeholder meeting as step 2. Do NOT bypass.</p></div></div>
+</div>
+
+<!-- ==================== TOOLS PAGE ==================== -->
+<div id="page-tools" class="page">
+    <div class="hero">
+        <h1>Booth Tools</h1>
+        <p>Real-time tools for use during events. Timer, pitch lookup, and conversation scoring.</p>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0;">Conversation Timer</h3>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">Optimal conversation: 5-8 minutes. Guides you through each phase.</p>
+        <div class="timer-display">
+            <div class="timer-time" id="timerDisplay">0:00</div>
+            <div class="timer-phase" id="timerPhase" style="color:var(--blue-bright);">Ready</div>
+            <div class="timer-hint" id="timerHint">Press Start to begin</div>
+        </div>
+        <div class="timer-bar"><div class="timer-bar-fill" id="timerBar" style="width:0%;background:var(--blue-bright);"></div></div>
+        <div class="timer-phases-list" id="timerPhases">
+            <div class="timer-phase-dot">Open (90s)</div>
+            <div class="timer-phase-dot">Mirror (60s)</div>
+            <div class="timer-phase-dot">Pitch (90s)</div>
+            <div class="timer-phase-dot">Objections (90s)</div>
+            <div class="timer-phase-dot">Close (60s)</div>
+        </div>
+        <div class="timer-controls">
+            <button class="btn btn-primary" id="timerStartBtn" onclick="toggleTimer()">Start</button>
+            <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0;">Quick Pitch Lookup</h3>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">Tap the buyer's pain to get your talk track.</p>
+        <div class="pain-options">
+            <button class="pain-btn" onclick="showQuickPitch(this,'qp-sr')" style="border-left:4px solid var(--green)">Unpredictable demand / slow nights / staffing guesswork</button>
+            <button class="pain-btn" onclick="showQuickPitch(this,'qp-op')" style="border-left:4px solid var(--orange)">Tech frustration / vendor doesn't understand us</button>
+            <button class="pain-btn" onclick="showQuickPitch(this,'qp-ai')" style="border-left:4px solid var(--blue-bright)">Floor inefficiency / wrong tables / want more volume</button>
+            <button class="pain-btn" onclick="showQuickPitch(this,'qp-no')" style="border-left:4px solid var(--gray-300)">Pain outside reservations / no reservations</button>
+        </div>
+        <div class="matcher-result" id="qp-sr" style="background:var(--green-light)"><h4 style="color:var(--green)">SMOOTH REVENUE</h4><div class="script">"We guarantee minimum guests on slower nights. If wrong, we pay you the difference. Budget from a real number."</div></div>
+        <div class="matcher-result" id="qp-op" style="background:var(--orange-light)"><h4 style="color:var(--orange)">OPERATOR</h4><div class="script">"Our founders were operators who built their own solution. Support team = former GMs and FOH managers."</div><p style="font-size:13px;color:var(--text-muted);margin-top:8px"><strong>Anchor story:</strong> Resy pushed update at 6PM Friday. Broke floor map. No human for 2 hours.</p></div>
+        <div class="matcher-result" id="qp-ai" style="background:var(--blue-light)"><h4 style="color:var(--blue-bright)">AI SEATING</h4><div class="script">"Smart assistant for your host. Holds a six-top for ten minutes when a larger party is likely. Like perfect Tetris every night."</div><p style="font-size:13px;color:var(--text-muted);margin-top:8px"><strong>Never say:</strong> "AI-driven optimization engine" / "algorithmically determines"</p></div>
+        <div class="matcher-result" id="qp-no" style="background:var(--gray-50)"><h4 style="color:var(--text-muted)">NOT ICP</h4><div class="script">"Our reservations product isn't the right fit. Can I grab your email? Do you use our review app?"</div></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0;">Post-Conversation Scorecard</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label>Discovery</label><select id="sc-discovery"><option value="">Select...</option><option value="3">Asked open questions, let buyer talk</option><option value="2">Some questions, pitched too early</option><option value="1">Started pitching immediately</option></select></div>
+            <div class="form-group"><label>Pitch Match</label><select id="sc-match"><option value="">Select...</option><option value="3">Correct pitch for their pain</option><option value="2">Right pitch eventually, wrong sequence</option><option value="1">Wrong pitch entirely</option></select></div>
+            <div class="form-group"><label>Jargon Control</label><select id="sc-jargon"><option value="">Select...</option><option value="3">Plain language throughout</option><option value="2">Some jargon, recovered</option><option value="1">Heavy jargon, confusion</option></select></div>
+            <div class="form-group"><label>Close Quality</label><select id="sc-close"><option value="">Select...</option><option value="3">Demo scheduled</option><option value="2">Calendar link sent</option><option value="1">Accepted "email me info"</option></select></div>
+            <div class="form-group"><label>Stakeholder</label><select id="sc-stakeholder"><option value="">Select...</option><option value="3">DM engaged or champion armed</option><option value="2">Champion ID'd, not armed</option><option value="1">Bypassed or missed</option></select></div>
+            <div class="form-group"><label>Time Efficiency</label><select id="sc-time"><option value="">Select...</option><option value="3">5-8 min, qualified quickly</option><option value="2">Slightly long but productive</option><option value="1">10+ min, no close or non-ICP</option></select></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px" onclick="scoreConversation()">Score It</button>
+        <div id="scoreResult" style="display:none;margin-top:16px" class="card">
+            <div class="score-grid">
+                <div class="score-item"><div class="score-value" id="scoreTotal" style="color:var(--navy)">—</div><div class="score-label">Total / 18</div></div>
+                <div class="score-item"><div class="score-value" id="scoreGrade" style="color:var(--navy)">—</div><div class="score-label">Grade</div></div>
+            </div>
+            <p id="scoreFeedback" style="font-size:14px;color:var(--text-muted);margin-top:12px"></p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== LEADS PAGE ==================== -->
+<div id="page-leads" class="page">
+    <div class="hero">
+        <h1>Lead Capture</h1>
+        <p>Log every conversation within 5 minutes. Don't batch at end of day.</p>
+    </div>
+
+    <div class="card" id="leadFormCard">
+        <h3 style="margin-top:0">New Lead</h3>
+        <div class="form-grid">
+            <div class="form-group"><label>Name <span class="required">*</span></label><input type="text" id="lead-name" placeholder="Dee Inthamat"></div>
+            <div class="form-group"><label>Title <span class="required">*</span></label><input type="text" id="lead-title" placeholder="VP of Operations"></div>
+            <div class="form-group"><label>Company <span class="required">*</span></label><input type="text" id="lead-company" placeholder="The Dinex Group"></div>
+            <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="lead-email" placeholder="dee@dinexgroup.com"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" id="lead-phone" placeholder="(optional)"></div>
+            <div class="form-group"><label>Company Size</label><select id="lead-size"><option value="">Select...</option><option>Single location</option><option>2-5 locations</option><option>6-20 locations</option><option>20-100 locations</option><option>100+ locations</option></select></div>
+            <div class="form-group"><label>Restaurant Type</label><select id="lead-type"><option value="">Select...</option><option>Fine dining</option><option>Casual dining</option><option>Fast casual</option><option>Bar / Lounge</option><option>Other</option></select></div>
+            <div class="form-group"><label>Current Platform</label><select id="lead-platform"><option value="">Select...</option><option>OpenTable</option><option>Resy</option><option>Paper / Phone</option><option>Other</option><option>None</option></select></div>
+            <div class="form-group full"><label>Primary Pain (their exact words) <span class="required">*</span></label><textarea id="lead-pain" placeholder='"The rollercoaster of demand is killing me"'></textarea></div>
+            <div class="form-group"><label>Pitch That Resonated</label><select id="lead-pitch"><option value="">Select...</option><option>Operator</option><option>Smooth Revenue</option><option>AI Seating</option><option>Multiple</option><option>None (not ICP)</option></select></div>
+            <div class="form-group"><label>Stakeholder Role</label><select id="lead-role"><option value="">Select...</option><option>Decision-maker</option><option>Champion / Influencer</option><option>No path to DM</option></select></div>
+            <div class="form-group full"><label>Decision-Maker (if different)</label><input type="text" id="lead-dm" placeholder="Daniel Boulud, CEO"></div>
+            <div class="form-group full"><label>Existing Relationship</label><select id="lead-existing"><option value="">Select...</option><option>Review app user (active)</option><option>Referral from customer</option><option>No prior relationship</option></select></div>
+            <div class="form-group full"><label>Next Step Agreed</label><input type="text" id="lead-next" placeholder="Demo Tuesday 2pm with Daniel"></div>
+            <div class="form-group full"><label>Temperature <span class="required">*</span></label><div class="temp-selector"><div class="temp-option" onclick="selectTemp(this,'Hot')">Hot</div><div class="temp-option" onclick="selectTemp(this,'Warm')">Warm</div><div class="temp-option" onclick="selectTemp(this,'Cool')">Cool</div><div class="temp-option" onclick="selectTemp(this,'Not ICP')">Not ICP</div></div></div>
+            <div class="form-group full"><label>Notes</label><textarea id="lead-notes" placeholder="Anything else..."></textarea></div>
+        </div>
+        <div class="btn-group"><button class="btn btn-primary" onclick="saveLead()">Save Lead</button><button class="btn btn-secondary" onclick="clearLeadForm()">Clear</button></div>
+    </div>
+
+    <h2>Captured Leads</h2>
+    <div class="leads-header">
+        <div class="leads-count" id="leadsCount">0 leads</div>
+        <div class="leads-filters">
+            <button class="filter-btn active" onclick="filterLeads('all',this)">All</button>
+            <button class="filter-btn" onclick="filterLeads('Hot',this)">Hot</button>
+            <button class="filter-btn" onclick="filterLeads('Warm',this)">Warm</button>
+            <button class="filter-btn" onclick="filterLeads('Cool',this)">Cool</button>
+        </div>
+    </div>
+    <div class="table-wrap"><table id="leadsTable" style="display:none"><thead><tr><th>Name</th><th>Company</th><th>Platform</th><th>Pitch</th><th>Temp</th><th>Next Step</th><th></th></tr></thead><tbody id="leadsBody"></tbody></table></div>
+    <div class="empty-state" id="emptyLeads"><div class="empty-icon">&#128203;</div><p>No leads captured yet.</p></div>
+    <div class="btn-group"><button class="btn btn-secondary" onclick="exportLeads()">Export CSV</button><button class="btn btn-danger" onclick="clearAllLeads()">Clear All</button></div>
+</div>
+
+<!-- ==================== EMAIL PAGE ==================== -->
+<div id="page-email" class="page">
+    <div class="hero">
+        <h1>Follow-Up Email Generator</h1>
+        <p>Generate personalized follow-up emails based on playbook templates.</p>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">Email Details</h3>
+        <div class="email-type-selector">
+            <button class="email-type-btn active" onclick="selectEmailType('smooth',this)">Smooth Revenue</button>
+            <button class="email-type-btn" onclick="selectEmailType('operator',this)">Operator / Partnership</button>
+            <button class="email-type-btn" onclick="selectEmailType('champion',this)">Champion Handoff</button>
+            <button class="email-type-btn" onclick="selectEmailType('crosssell',this)">Cross-Sell</button>
+        </div>
+        <div class="form-grid">
+            <div class="form-group"><label>Prospect Name</label><input type="text" id="email-name" placeholder="Daljeet" oninput="generateEmail()"></div>
+            <div class="form-group"><label>Restaurant</label><input type="text" id="email-restaurant" placeholder="Masala King" oninput="generateEmail()"></div>
+            <div class="form-group full"><label>Their Pain</label><input type="text" id="email-pain" placeholder='"the Tuesday rollercoaster"' oninput="generateEmail()"></div>
+            <div class="form-group" id="email-dm-group" style="display:none"><label>Decision-Maker</label><input type="text" id="email-dm" placeholder="Daniel" oninput="generateEmail()"></div>
+            <div class="form-group" id="email-incumbent-group"><label>Platform</label><select id="email-incumbent" onchange="generateEmail()"><option value="">Select...</option><option>OpenTable</option><option>Resy</option><option>Paper / Phone</option></select></div>
+            <div class="form-group"><label>Your Name</label><input type="text" id="email-rep" placeholder="John" oninput="generateEmail()"></div>
+            <div class="form-group" id="email-ref-group" style="display:none"><label>Referral Name</label><input type="text" id="email-ref" placeholder="Maria Chen" oninput="generateEmail()"></div>
+            <div class="form-group" id="email-team-group" style="display:none"><label>Team Lead</label><input type="text" id="email-team" placeholder="Review team lead" oninput="generateEmail()"></div>
+        </div>
+    </div>
+
+    <h2>Preview</h2>
+    <div class="email-preview">
+        <div class="email-preview-header">
+            <div class="email-field"><span class="email-field-label">Subject</span><span class="email-field-value" id="emailSubject">—</span></div>
+            <div class="email-field"><span class="email-field-label">To</span><span class="email-field-value" id="emailTo">—</span></div>
+        </div>
+        <div class="email-preview-body" id="emailBody">Fill in details above to generate.</div>
+    </div>
+    <button class="copy-btn" onclick="copyEmail()">&#128203; Copy to Clipboard</button>
+</div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="leadModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3 id="modalTitle">Lead Details</h3>
+        <div id="modalContent"></div>
+        <div class="btn-group" style="margin-top:20px">
+            <button class="btn btn-secondary" onclick="generateEmailFromLead()">Generate Email</button>
+            <button class="btn btn-danger" onclick="deleteLeadFromModal()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// NAV
+function showPage(page, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    if (btn) btn.classList.add('active');
+    document.getElementById('navTabs').classList.remove('open');
+    window.scrollTo(0, 0);
+}
+function toggleMobileNav() { document.getElementById('navTabs').classList.toggle('open'); }
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// ACCORDION
+function toggleAccordion(btn) { btn.parentElement.classList.toggle('open'); }
+
+// PITCH MATCHER
+function showMatch(btn, id) {
+    const container = btn.closest('.accordion-content') || btn.closest('.card');
+    container.querySelectorAll('.pain-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    container.querySelectorAll('.matcher-result').forEach(r => r.classList.remove('show'));
+    document.getElementById('match-' + id).classList.add('show');
+}
+function showQuickPitch(btn, id) {
+    const card = btn.closest('.card');
+    card.querySelectorAll('.pain-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    card.querySelectorAll('.matcher-result').forEach(r => r.classList.remove('show'));
+    document.getElementById(id).classList.add('show');
+}
+
+// ROLE PLAY
+function revealAnswer(btn) {
+    const a = btn.nextElementSibling;
+    a.classList.toggle('show');
+    btn.textContent = a.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+
+// OBJECTIONS
+function showObjection(i, btn) {
+    document.querySelectorAll('.objection-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.objection-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('obj-' + i).classList.add('active');
+}
+
+// COMPETITIVE
+function showCompetitor(id, btn) {
+    document.querySelectorAll('.competitive-toggle button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.competitive-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('comp-' + id).classList.add('active');
+}
+
+// TIMER
+let timerInterval = null, timerSeconds = 0, timerRunning = false;
+const phases = [
+    { name:'Open & Qualify', duration:90, color:'var(--blue-bright)', hint:'Ask: "What brought you?" + "Biggest challenge?"' },
+    { name:'Mirror & Match', duration:60, color:'var(--purple)', hint:'Reflect pain. Pick your pitch.' },
+    { name:'Pitch', duration:90, color:'var(--orange)', hint:'Lead pitch in plain language. Use proof points.' },
+    { name:'Handle Objections', duration:90, color:'var(--yellow)', hint:'Address concerns. Layer second pitch if relevant.' },
+    { name:'Close', duration:60, color:'var(--green)', hint:'Restate pain → demo → binary times → calendar link.' },
+];
+const totalDur = phases.reduce((s,p) => s+p.duration, 0);
+function toggleTimer() {
+    if (timerRunning) { clearInterval(timerInterval); timerRunning=false; document.getElementById('timerStartBtn').textContent='Resume'; }
+    else { timerRunning=true; document.getElementById('timerStartBtn').textContent='Pause'; timerInterval=setInterval(()=>{timerSeconds++;updateTimer();},1000); }
+}
+function resetTimer() { clearInterval(timerInterval); timerRunning=false; timerSeconds=0; document.getElementById('timerStartBtn').textContent='Start'; updateTimer(); }
+function updateTimer() {
+    const m=Math.floor(timerSeconds/60), s=timerSeconds%60;
+    document.getElementById('timerDisplay').textContent=m+':'+(s<10?'0':'')+s;
+    let el=0, cp=phases.length-1;
+    for(let i=0;i<phases.length;i++){el+=phases[i].duration;if(timerSeconds<el){cp=i;break;}}
+    const ph=phases[cp];
+    document.getElementById('timerPhase').textContent=ph.name; document.getElementById('timerPhase').style.color=ph.color;
+    document.getElementById('timerHint').textContent=ph.hint;
+    const pct=Math.min((timerSeconds/totalDur)*100,100);
+    const bar=document.getElementById('timerBar'); bar.style.width=pct+'%'; bar.style.backgroundColor=timerSeconds>totalDur?'var(--red)':ph.color;
+    if(timerSeconds>totalDur){document.getElementById('timerPhase').textContent='OVERTIME — Close now!';document.getElementById('timerPhase').style.color='var(--red)';document.getElementById('timerHint').textContent='Past 8 minutes. Close immediately.';}
+    document.getElementById('timerDisplay').style.color=timerSeconds>totalDur?'var(--red)':'var(--navy)';
+    document.querySelectorAll('.timer-phase-dot').forEach((d,i)=>{
+        d.classList.remove('active','completed');d.style.background='var(--gray-50)';d.style.color='var(--text-muted)';
+        if(i<cp){d.classList.add('completed');}
+        if(i===cp&&timerSeconds<=totalDur){d.classList.add('active');d.style.background=phases[i].color;d.style.color='#fff';}
+    });
+}
+
+// SCORECARD
+function scoreConversation() {
+    const f=['sc-discovery','sc-match','sc-jargon','sc-close','sc-stakeholder','sc-time'];
+    let t=0,c=0; f.forEach(id=>{const v=document.getElementById(id).value;if(v){t+=parseInt(v);c++;}});
+    if(c<6){alert('Fill in all fields.');return;}
+    document.getElementById('scoreResult').style.display='block';
+    document.getElementById('scoreTotal').textContent=t;
+    let g,fb;
+    if(t>=16){g='A';fb='Excellent. Strong discovery, matched pitch, locked next step.';}
+    else if(t>=13){g='B';fb='Good with room to improve. Focus on lowest-scoring dimensions.';}
+    else if(t>=10){g='C';fb='Significant improvement needed. Review playbook for weak areas.';}
+    else{g='D';fb='Major issues. Debrief with partner before next conversation.';}
+    document.getElementById('scoreGrade').textContent=g;
+    document.getElementById('scoreFeedback').textContent=fb;
+}
+
+// LEADS
+let leads=JSON.parse(localStorage.getItem('ss_leads')||'[]'), selectedTemp='', currentFilter='all', modalLeadIdx=null;
+function selectTemp(el,t){document.querySelectorAll('.temp-option').forEach(o=>o.classList.remove('selected-hot','selected-warm','selected-cool','selected-no'));selectedTemp=t;el.classList.add(t==='Hot'?'selected-hot':t==='Warm'?'selected-warm':t==='Cool'?'selected-cool':'selected-no');}
+function saveLead(){
+    const n=document.getElementById('lead-name').value.trim(),c=document.getElementById('lead-company').value.trim(),e=document.getElementById('lead-email').value.trim(),p=document.getElementById('lead-pain').value.trim();
+    if(!n||!c||!e||!p||!selectedTemp){alert('Fill required fields.');return;}
+    leads.push({name:n,company:c,email:e,pain:p,title:document.getElementById('lead-title').value.trim(),phone:document.getElementById('lead-phone').value.trim(),size:document.getElementById('lead-size').value,type:document.getElementById('lead-type').value,platform:document.getElementById('lead-platform').value,pitch:document.getElementById('lead-pitch').value,role:document.getElementById('lead-role').value,dm:document.getElementById('lead-dm').value.trim(),existing:document.getElementById('lead-existing').value,next:document.getElementById('lead-next').value.trim(),temp:selectedTemp,notes:document.getElementById('lead-notes').value.trim(),timestamp:new Date().toISOString()});
+    localStorage.setItem('ss_leads',JSON.stringify(leads));renderLeads();clearLeadForm();
+}
+function clearLeadForm(){document.querySelectorAll('#leadFormCard input,#leadFormCard textarea').forEach(e=>e.value='');document.querySelectorAll('#leadFormCard select').forEach(e=>e.selectedIndex=0);document.querySelectorAll('.temp-option').forEach(o=>o.classList.remove('selected-hot','selected-warm','selected-cool','selected-no'));selectedTemp='';}
+function renderLeads(){
+    const tb=document.getElementById('leadsBody'),fl=currentFilter==='all'?leads:leads.filter(l=>l.temp===currentFilter);
+    document.getElementById('leadsCount').textContent=leads.length+' lead'+(leads.length!==1?'s':'');
+    document.getElementById('emptyLeads').style.display=fl.length?'none':'block';
+    document.getElementById('leadsTable').style.display=fl.length?'table':'none';
+    tb.innerHTML='';
+    fl.forEach(l=>{const ri=leads.indexOf(l),tc=l.temp==='Hot'?'badge-hot':l.temp==='Warm'?'badge-warm':l.temp==='Cool'?'badge-cool':'badge-no',tr=document.createElement('tr');tr.className='lead-row';tr.onclick=()=>showLeadDetail(ri);tr.innerHTML='<td><strong style="color:var(--text-primary)">'+esc(l.name)+'</strong><br><span style="font-size:12px;color:var(--text-muted)">'+esc(l.title)+'</span></td><td>'+esc(l.company)+'</td><td>'+esc(l.platform||'—')+'</td><td>'+esc(l.pitch||'—')+'</td><td><span class="badge '+tc+'">'+esc(l.temp)+'</span></td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(l.next||'—')+'</td><td><button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" onclick="event.stopPropagation();deleteLead('+ri+')">&#128465;</button></td>';tb.appendChild(tr);});
+}
+function filterLeads(f,b){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderLeads();}
+function deleteLead(i){if(confirm('Delete?')){leads.splice(i,1);localStorage.setItem('ss_leads',JSON.stringify(leads));renderLeads();}}
+function clearAllLeads(){if(confirm('Delete ALL leads?')){leads=[];localStorage.setItem('ss_leads',JSON.stringify(leads));renderLeads();}}
+function showLeadDetail(i){
+    modalLeadIdx=i;const l=leads[i];document.getElementById('modalTitle').textContent=l.name+' — '+l.company;
+    const fs=[['Name',l.name],['Title',l.title],['Company',l.company],['Email',l.email],['Phone',l.phone],['Size',l.size],['Type',l.type],['Platform',l.platform],['Pain',l.pain],['Pitch',l.pitch],['Role',l.role],['Decision-Maker',l.dm],['Relationship',l.existing],['Next Step',l.next],['Temperature',l.temp],['Notes',l.notes],['Captured',new Date(l.timestamp).toLocaleString()]];
+    let h='';fs.forEach(([a,b])=>{if(b)h+='<div class="detail-row"><span class="detail-label">'+a+'</span><span class="detail-value">'+esc(b)+'</span></div>';});
+    document.getElementById('modalContent').innerHTML=h;document.getElementById('leadModal').classList.add('show');
+}
+function closeModal(){document.getElementById('leadModal').classList.remove('show');modalLeadIdx=null;}
+function deleteLeadFromModal(){if(modalLeadIdx!==null){deleteLead(modalLeadIdx);closeModal();}}
+function generateEmailFromLead(){if(modalLeadIdx===null)return;const l=leads[modalLeadIdx];closeModal();showPage('email');document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.nav-tab')[3].classList.add('active');document.getElementById('email-name').value=l.name.split(' ')[0];document.getElementById('email-restaurant').value=l.company;document.getElementById('email-pain').value=l.pain;generateEmail();}
+function exportLeads(){
+    if(!leads.length){alert('No leads.');return;}
+    const h=['Name','Title','Company','Email','Phone','Size','Type','Platform','Pain','Pitch','Role','DM','Existing','Next','Temp','Notes','Timestamp'];
+    let csv=h.join(',')+'\n';leads.forEach(l=>{csv+=[l.name,l.title,l.company,l.email,l.phone,l.size,l.type,l.platform,l.pain,l.pitch,l.role,l.dm,l.existing,l.next,l.temp,l.notes,l.timestamp].map(v=>'"'+(v||'').replace(/"/g,'""')+'"').join(',')+'\n';});
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='leads_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+// EMAIL
+let emailType='smooth';
+function selectEmailType(t,b){emailType=t;document.querySelectorAll('.email-type-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('email-dm-group').style.display=t==='champion'?'block':'none';document.getElementById('email-ref-group').style.display=t==='operator'?'block':'none';document.getElementById('email-incumbent-group').style.display=(t==='smooth'||t==='operator')?'block':'none';document.getElementById('email-team-group').style.display=t==='crosssell'?'block':'none';generateEmail();}
+function generateEmail(){
+    const n=document.getElementById('email-name').value.trim()||'[Name]',r=document.getElementById('email-restaurant').value.trim()||'[Restaurant]',p=document.getElementById('email-pain').value.trim()||'[their pain]',rep=document.getElementById('email-rep').value.trim()||'[Your Name]',dm=document.getElementById('email-dm').value.trim()||'[Decision-Maker]',ref=document.getElementById('email-ref').value.trim(),inc=document.getElementById('email-incumbent').value||'[Platform]',tm=document.getElementById('email-team').value.trim()||'[Team Lead]';
+    let s,to,b;
+    if(emailType==='smooth'){s='Re: '+p;to=n;b='Hi '+n+',\n\nGreat meeting you at the Restaurant Show. I keep thinking about what you said — '+p+'.\n\nThat\'s the exact problem Smooth Revenue was built for. We give you a guaranteed minimum guest count on off-peak nights, and if our prediction is wrong, we pay you the difference. Budget produce and labor from a real number.\n\nI\'d love to show you how this works for '+r+' in a 20-minute demo:\n\n[Calendar link]\n\nLooking forward to it.\n\n'+rep;}
+    else if(emailType==='operator'){s='What "real support" looks like';to=n;b='Hi '+n+',\n\nReally enjoyed our conversation. Your frustration with '+inc+' — especially around support — is something we hear constantly.\n\nOur support team is staffed by former GMs and FOH managers. When you call, you talk to someone who\'s lived a Saturday night service.\n\nI think the best first step is a 30-minute conversation about what partnership looks like with us. You can ask anything.\n\n[Calendar link]\n\n'+rep+(ref?'\n\nP.S. — '+ref+' is happy to share their experience if helpful.':'');}
+    else if(emailType==='champion'){s='Quick intro for '+dm;to=n;b='Hi '+n+',\n\nAs promised, here\'s a blurb to forward to '+dm+':\n\n---\n\n"Hi '+dm+', I met the Soft Skillet team at the Restaurant Show. They\'re built by restaurant operators and have an interesting approach to '+p+'. Worth a 20-minute look."\n\n---\n\nOne-pager attached. Let me know if anything else would help.\n\n'+rep;}
+    else{s='Warm lead — '+r;to=tm;b='Met '+n+' at the show ('+r+'). Already on our review app, wants more value from it.\n\nNot ICP for reservations but enthusiastic about the brand. Mentioned: '+p+'.\n\nTold them someone would reach out directly.\n\nContact: [email/phone]\n\nPlease reach out within 1-2 days while show is fresh.';}
+    document.getElementById('emailSubject').textContent=s;document.getElementById('emailTo').textContent=to;document.getElementById('emailBody').textContent=b;
+}
+function copyEmail(){
+    const s=document.getElementById('emailSubject').textContent,b=document.getElementById('emailBody').textContent;
+    navigator.clipboard.writeText('Subject: '+s+'\n\n'+b).then(()=>{const btn=document.querySelector('.copy-btn');btn.classList.add('copied');btn.innerHTML='&#10003; Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='&#128203; Copy to Clipboard';},2000);});
+}
+
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+renderLeads();generateEmail();
+document.getElementById('leadModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script>
+</body>
+</html>

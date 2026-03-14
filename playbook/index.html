@@ -1038,24 +1038,21 @@
 
     <div class="metrics-row">
         <div class="metric-card"><div class="metric-value">10</div><div class="metric-label">Conversations</div></div>
-        <div class="metric-card"><div class="metric-value">7</div><div class="metric-label">ICP Match</div></div>
-        <div class="metric-card"><div class="metric-value">6</div><div class="metric-label">Strong Interest</div></div>
-        <div class="metric-card"><div class="metric-value">3</div><div class="metric-label">Demo-Ready*</div></div>
-        <div class="metric-card"><div class="metric-value" style="color:var(--red)">1</div><div class="metric-label">Demo Locked</div></div>
+        <div class="metric-card"><div class="metric-value">6</div><div class="metric-label">High ICP (≥7)</div></div>
+        <div class="metric-card"><div class="metric-value">5</div><div class="metric-label">Strong Interest</div></div>
+        <div class="metric-card"><div class="metric-value" style="color:var(--red)">2</div><div class="metric-label">Demo Intent</div></div>
     </div>
 
     <div class="card">
         <h3 style="margin-top:0">The Bottleneck</h3>
-        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">The pipeline doesn't break at interest — it breaks at conversion to scheduled demos. 6 prospects expressed strong interest. Only 1 left with a locked next step (Daljeet: "call me tomorrow"). That's a <strong>17% conversion rate from interest to demo.</strong> The fix isn't better pitching — it's better closing mechanics.</p>
-        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px"><strong>*Demo-ready</strong> = prospect who (1) is ICP, (2) expressed clear interest in a specific product, and (3) could have been converted to a scheduled demo with better closing mechanics. The 3 demo-ready prospects: <strong>Dee</strong> (asked to bring Daniel into a demo), <strong>Daljeet</strong> (said "call me tomorrow"), and <strong>Orla</strong> (said the product was "amazing" but was let go with a vague next step).</p>
+        <p style="color:var(--text-secondary);font-size:15px;margin-bottom:16px">The pipeline doesn't break at interest — it breaks at conversion to demos. 5 prospects expressed strong interest, but only 2 showed demo intent (Dee: "Can we get on the books for a demo next week?" and Daljeet: "call me tomorrow"). That's a <strong>20% demo-intent rate</strong> across all conversations. The fix isn't better pitching — it's better closing mechanics.</p>
         <div class="funnel-bar-container">
             <div class="funnel-step"><div class="funnel-step-label">Conversations</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:100%;background:var(--navy)">10</div></div><div class="funnel-drop"></div></div>
-            <div class="funnel-step"><div class="funnel-step-label">ICP Match</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:70%;background:var(--blue-bright)">7</div></div><div class="funnel-drop">-30%</div></div>
-            <div class="funnel-step"><div class="funnel-step-label">Strong Interest</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:60%;background:var(--green)">6</div></div><div class="funnel-drop">-14%</div></div>
-            <div class="funnel-step"><div class="funnel-step-label">Demo-Ready</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:30%;background:var(--yellow)">3</div></div><div class="funnel-drop">-50%</div></div>
-            <div class="funnel-step"><div class="funnel-step-label">Demo Scheduled</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:10%;background:var(--red)">1</div></div><div class="funnel-drop">-67%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">High ICP (≥7)</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:60%;background:var(--blue-bright)">6</div></div><div class="funnel-drop">-40%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">Strong Interest</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:50%;background:var(--green)">5</div></div><div class="funnel-drop">-17%</div></div>
+            <div class="funnel-step"><div class="funnel-step-label">Demo Intent</div><div class="funnel-bar-track"><div class="funnel-bar-fill" style="width:20%;background:var(--red)">2</div></div><div class="funnel-drop">-60%</div></div>
         </div>
-        <p style="color:var(--text-muted);font-size:13px"><strong>Key drops:</strong> Interest → Demo-Ready loses 50% (pitch sequencing issues — right product, wrong order). Demo-Ready → Scheduled loses 67% (weak closes — accepting "email me info" instead of locking calendar).</p>
+        <p style="color:var(--text-muted);font-size:13px"><strong>Key drop:</strong> Strong Interest → Demo Intent loses 60% (weak closes — accepting "email me info" or "I'll pass your card along" instead of locking calendar).</p>
     </div>
 
     <div class="card">
@@ -1064,61 +1061,75 @@
             <div style="background:var(--gray-50);border-radius:var(--radius-sm);padding:20px;text-align:center;">
                 <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:12px;">Working Assumptions*</div>
                 <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
-                    Lead → Demo: <strong style="color:var(--navy)">~20%</strong><br>
-                    Demo → Pilot: <strong style="color:var(--navy)">~25%</strong><br>
-                    Pilot → Deal: <strong style="color:var(--navy)">~40%</strong>
+                    Lead → Demo: <strong style="color:var(--navy)">15–25%</strong><br>
+                    Demo → Closed Deal: <strong style="color:var(--navy)">15–30%</strong>
                 </div>
-                <div style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.4;">*Reasonable SaaS event benchmarks based on typical restaurant-tech sales cycles. Actual rates vary by segment and deal size.</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.4;">*Reasonable B2B SaaS event benchmarks. ~22% opportunity→closed deal average. Actual rates vary by segment and deal size.</div>
             </div>
             <div style="background:var(--red-light);border-radius:var(--radius-sm);padding:20px;text-align:center;">
                 <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--red);margin-bottom:12px;">NYC Show (Actual)</div>
                 <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
-                    7 ICP leads → <strong style="color:var(--red)">1 demo</strong><br>
-                    Lead → Demo: <strong style="color:var(--red)">14%</strong><br>
-                    Expected deals: <strong style="color:var(--red)">~0.1</strong>*
+                    10 leads → <strong style="color:var(--red)">2 demo intent</strong><br>
+                    Lead → Demo: <strong style="color:var(--red)">20%</strong><br>
+                    Demo → Deal (25%): <strong style="color:var(--red)">~0.5</strong>
                 </div>
             </div>
             <div style="background:var(--green-light);border-radius:var(--radius-sm);padding:20px;text-align:center;">
                 <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:12px;">With This Playbook</div>
                 <div style="font-size:14px;color:var(--text-secondary);line-height:2;">
-                    7 ICP leads → <strong style="color:var(--green)">3-4 demos</strong><br>
-                    Lead → Demo: <strong style="color:var(--green)">40-50%</strong><br>
-                    Expected deals: <strong style="color:var(--green)">~0.3</strong>
+                    6 high-ICP → <strong style="color:var(--green)">3–4 demos</strong><br>
+                    Lead → Demo: <strong style="color:var(--green)">50–65%</strong><br>
+                    Demo → Deal (25%): <strong style="color:var(--green)">~0.9</strong>
                 </div>
             </div>
         </div>
-        <p style="color:var(--text-muted);font-size:13px;margin-top:8px"><strong>The math:</strong> With current benchmark conversion rates, 7 qualified leads should yield: 7 × 0.20 (lead→demo) × 0.25 (demo→pilot) × 0.40 (pilot→deal) = <strong>0.14 expected deals.</strong> With this playbook targeting 40–50% lead-to-demo conversion: 7 × 0.45 × 0.25 × 0.40 = <strong>0.32 expected deals</strong> — roughly 2–3× more expected deal output from the same event investment.</p>
+        <p style="color:var(--text-muted);font-size:13px;margin-top:8px"><strong>The math:</strong> NYC actual: 2 demo-intent conversations × 0.25 (demo→close benchmark) = <strong>0.5 expected deals.</strong> With this playbook improving closing mechanics on the 6 high-ICP leads, estimated deal probabilities per lead (below) sum to <strong>~0.9 expected deals</strong> — roughly 2× more deal output from the same event investment.</p>
+
+        <h3>Estimated Deal Probability by Prospect</h3>
+        <p style="color:var(--text-muted);font-size:13px;margin-bottom:12px">Deal Probability = Estimated Demo Probability × Demo→Close Benchmark (25%)</p>
+        <div class="table-wrap"><table>
+            <tr><th>#</th><th>Restaurant</th><th>ICP</th><th>Signal</th><th>Demo Prob.</th><th>Deal Prob.</th></tr>
+            <tr><td>1</td><td><strong>Masala King</strong></td><td>7</td><td>Immediate action</td><td>70%</td><td><strong>18%</strong></td></tr>
+            <tr><td>2</td><td><strong>Dinex</strong></td><td>8</td><td>Demo requested</td><td>65%</td><td><strong>16%</strong></td></tr>
+            <tr><td>3</td><td><strong>Rustik Tavern</strong></td><td>8</td><td>Strong enthusiasm</td><td>55%</td><td><strong>14%</strong></td></tr>
+            <tr><td>4</td><td><strong>Felice 64</strong></td><td>7</td><td>Strong enthusiasm</td><td>50%</td><td><strong>13%</strong></td></tr>
+            <tr><td>5</td><td><strong>Elizabeth Murray</strong></td><td>7</td><td>Strong validation</td><td>40%</td><td><strong>10%</strong></td></tr>
+            <tr><td>6</td><td>Coszcal</td><td>7</td><td>Moderate interest</td><td>30%</td><td>8%</td></tr>
+            <tr><td>7</td><td>BJ's</td><td>5</td><td>Moderate evaluation</td><td>25%</td><td>6%</td></tr>
+            <tr><td>8</td><td style="color:var(--text-muted)">USHG</td><td>5</td><td>Weak engagement</td><td>10%</td><td>3%</td></tr>
+            <tr><td>9</td><td style="color:var(--text-muted)">Le Bernardin</td><td>4</td><td>Weak lead</td><td>8%</td><td>2%</td></tr>
+            <tr><td>10</td><td style="color:var(--text-muted)">Taco Mahal</td><td>2</td><td>Disqualified</td><td>0%</td><td>0%</td></tr>
+        </table></div>
     </div>
 
     <!-- ICP SCORING -->
     <div class="card">
         <h3 style="margin-top:0">ICP Scoring Framework</h3>
-        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px">Score every booth conversation to prioritize follow-up and allocate rep time. Prospects scoring 7+ are Tier 1 follow-ups.</p>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px">Score every booth conversation to prioritize follow-up and allocate rep time. Max score = 8. Prospects scoring 7+ are Tier 1 follow-ups.</p>
         <div class="table-wrap"><table>
             <tr><th>Factor</th><th>Points</th><th>Why It Matters</th></tr>
-            <tr><td>Takes reservations (full-service dining)</td><td style="text-align:center"><strong>2</strong></td><td>Must-have. No reservations = not ICP (Danikkah scored 0).</td></tr>
-            <tr><td>Currently on OpenTable or Resy</td><td style="text-align:center"><strong>2</strong></td><td>Active displeasure with incumbents is our primary wedge.</td></tr>
-            <tr><td>Decision-maker or armed champion present</td><td style="text-align:center"><strong>2</strong></td><td>Without a path to the buyer, pipeline stalls (Karin scored 0).</td></tr>
-            <tr><td>Existing Soft Skillet relationship (review app)</td><td style="text-align:center"><strong>2</strong></td><td>Pre-built trust. 2 of 3 review users cited it as reason to consider. This is our unfair advantage.</td></tr>
-            <tr><td>Demand volatility pain (slow nights)</td><td style="text-align:center"><strong>1</strong></td><td>Direct Smooth Revenue fit — highest-converting pitch.</td></tr>
-            <tr><td>Multi-location (2+)</td><td style="text-align:center"><strong>1</strong></td><td>Higher deal value. Enterprise accounts justify more rep time.</td></tr>
+            <tr><td>Reservations core (takes reservations)</td><td style="text-align:center"><strong>2</strong></td><td>Must-have. No reservations = not ICP (Taco Mahal scored 0).</td></tr>
+            <tr><td>Relevant pain (demand, vendor, floor)</td><td style="text-align:center"><strong>2</strong></td><td>Pain that maps directly to Smooth Revenue, Operator, or AI Seating.</td></tr>
+            <tr><td>Decision authority (DM or armed champion)</td><td style="text-align:center"><strong>2</strong></td><td>Without a path to the buyer, pipeline stalls (Le Bernardin scored 0).</td></tr>
+            <tr><td>Using OpenTable or Resy</td><td style="text-align:center"><strong>1</strong></td><td>Active displeasure with incumbents is our primary wedge.</td></tr>
+            <tr><td>Full-service dining</td><td style="text-align:center"><strong>1</strong></td><td>Confirms reservation-dependent model. Higher product fit.</td></tr>
         </table></div>
 
-        <h3>NYC Show Scored</h3>
+        <h3>NYC Show Scored (Ranked by ICP Score)</h3>
         <div class="table-wrap"><table class="icp-score-table">
-            <tr><th>Prospect</th><th>Reserv.</th><th>OT/Resy</th><th>DM Path</th><th>Review App</th><th>Volatility</th><th>Multi-Loc</th><th>Score</th><th>Tier</th></tr>
-            <tr><td><strong>Dee / Dinex</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
-            <tr><td><strong>Brian / BJ's</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
-            <tr><td><strong>Daljeet / Masala King</strong></td><td>2</td><td>0</td><td>2</td><td>2</td><td>1</td><td>0</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
-            <tr><td><strong>Elizabeth Murray</strong></td><td>2</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Tier 1</span></td></tr>
-            <tr><td><strong>Frantz / Rustik</strong></td><td>2</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>5</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
-            <tr><td><strong>Orla / Felice 64</strong></td><td>2</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>5</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
-            <tr><td><strong>Fabiola / Coszcal</strong></td><td>2</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td><strong>4</strong></td><td><span class="badge badge-warm">Tier 2</span></td></tr>
-            <tr><td style="color:var(--text-muted)">Kelly / USHG</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td><span class="badge badge-cool">Pain ≠ product</span></td></tr>
-            <tr><td style="color:var(--text-muted)">Karin / Le Bernardin</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>5</td><td><span class="badge badge-cool">Wrong person</span></td></tr>
-            <tr><td style="color:var(--text-muted)">Danikkah / Taco Mahal</td><td>0</td><td>0</td><td>2</td><td>2</td><td>0</td><td>0</td><td>4</td><td><span class="badge badge-no">Not ICP</span></td></tr>
+            <tr><th>#</th><th>Prospect</th><th>Reserv. (2)</th><th>Pain (2)</th><th>Authority (2)</th><th>OT/Resy (1)</th><th>Full-Svc (1)</th><th>Score</th><th>Interest</th></tr>
+            <tr><td>1</td><td><strong>Dee / Dinex</strong></td><td>2</td><td>2</td><td>2</td><td>1</td><td>1</td><td><strong>8</strong></td><td><span class="badge badge-hot">Strong</span></td></tr>
+            <tr><td>2</td><td><strong>Frantz / Rustik</strong></td><td>2</td><td>2</td><td>2</td><td>1</td><td>1</td><td><strong>8</strong></td><td><span class="badge badge-hot">Strong</span></td></tr>
+            <tr><td>3</td><td><strong>Daljeet / Masala King</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Very Strong</span></td></tr>
+            <tr><td>4</td><td><strong>Fabiola / Coszcal</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-warm">Moderate</span></td></tr>
+            <tr><td>5</td><td><strong>Elizabeth Murray</strong></td><td>2</td><td>2</td><td>2</td><td>0</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Strong</span></td></tr>
+            <tr><td>6</td><td><strong>Orla / Felice 64</strong></td><td>2</td><td>2</td><td>1</td><td>1</td><td>1</td><td><strong>7</strong></td><td><span class="badge badge-hot">Strong</span></td></tr>
+            <tr><td>7</td><td style="color:var(--text-muted)">Brian / BJ's</td><td>2</td><td>1</td><td>1</td><td>1</td><td>0</td><td>5</td><td><span class="badge badge-warm">Moderate</span></td></tr>
+            <tr><td>8</td><td style="color:var(--text-muted)">Kelly / USHG</td><td>2</td><td>0</td><td>1</td><td>1</td><td>1</td><td>5</td><td><span class="badge badge-cool">Low</span></td></tr>
+            <tr><td>9</td><td style="color:var(--text-muted)">Karin / Le Bernardin</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>4</td><td><span class="badge badge-cool">Low</span></td></tr>
+            <tr><td>10</td><td style="color:var(--text-muted)">Danikkah / Taco Mahal</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>2</td><td><span class="badge badge-no">None</span></td></tr>
         </table></div>
-        <p style="color:var(--text-muted);font-size:13px;margin-top:12px"><strong>Insight:</strong> Danikkah's 4 points does not mean "reservations ICP" — it means "commercially valuable lead for Soft Skillet overall." Her review app relationship (2 pts) and decision-maker status (2 pts) make her a high-value cross-sell lead. The score correctly flags her for internal handoff, not discard. This is by design: the framework scores company-wide value, not just reservations fit.</p>
+        <p style="color:var(--text-muted);font-size:13px;margin-top:12px"><strong>Insight:</strong> Danikkah scores 2 — this does not mean "discard." It means "not reservations ICP." Her decision-maker status (2 pts) and existing review app relationship make her a commercially valuable cross-sell lead for Soft Skillet overall. The correct action is internal handoff, not discard.</p>
     </div>
 
     <!-- GROWTH LOOP INSIGHT -->
@@ -1356,8 +1367,8 @@
             <p><strong>60-minute debrief within 48 hours.</strong> Pipeline review → Pitch effectiveness → Rep coaching → Process improvements.</p>
             <div class="table-wrap"><table>
                 <tr><th>Metric</th><th>NYC Baseline</th><th>Target</th></tr>
-                <tr><td>Demo conversion rate</td><td>~20%</td><td>40-50%</td></tr>
-                <tr><td>Hot leads</td><td>2</td><td>4-6</td></tr>
+                <tr><td>Demo intent rate</td><td>20%</td><td>50-65%</td></tr>
+                <tr><td>High-ICP leads (≥7)</td><td>6</td><td>6+</td></tr>
                 <tr><td>Non-ICP time wasted</td><td>~20 min</td><td>&lt;10 min</td></tr>
                 <tr><td>Cross-sell capture</td><td>0%</td><td>100%</td></tr>
             </table></div>
@@ -1430,7 +1441,7 @@
     <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Day-by-day execution plans for the three highest-scoring accounts from the NYC show.</p>
 
     <div class="card">
-        <h3 style="margin-top:0;color:var(--red)">1. Daljeet Masala — Masala King <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
+        <h3 style="margin-top:0;color:var(--red)">1. Daljeet — Masala King <span class="badge badge-hot" style="margin-left:8px">ICP: 7 | Deal Prob: 18%</span></h3>
         <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Single-location independent. Paper/phone reservations. Review app user. Said "call me tomorrow." Highest urgency lead.</p>
         <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Call him (as promised)</h4><p>Do not email first. He said call, so call. This is a trust test — he's watching to see if Soft Skillet follows through the way the review team does. On the call: don't re-pitch. Move to onboarding mechanics. "Let's get you set up. Here's what the first week looks like."</p></div></div>
         <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 2</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Send onboarding checklist</h4><p>What data Soft Skillet needs (hours, historical covers if available). Set expectations on Smooth Revenue guarantee: how it's calculated, when it kicks in, payout process. He's moving from paper — make migration feel simple.</p></div></div>
@@ -1439,7 +1450,7 @@
     </div>
 
     <div class="card">
-        <h3 style="margin-top:0;color:var(--red)">2. Dee Inthamat — The Dinex Group <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
+        <h3 style="margin-top:0;color:var(--red)">2. Dee — The Dinex Group <span class="badge badge-hot" style="margin-left:8px">ICP: 8 | Deal Prob: 16%</span></h3>
         <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Enterprise (Daniel Boulud's group, 10+ locations). OpenTable. Dee requested demo with Daniel. Marquee logo opportunity.</p>
         <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Personalized email to Dee</h4><p>Reference: "built by restaurant guys" moment that resonated. Propose 2-3 demo times. Ask: "Would it make sense to include Daniel, or would you prefer to preview first?" Give her agency over how Daniel is involved.</p></div></div>
         <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 2</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Build Dinex-specific demo</h4><p>Pull data on their portfolio. Show how Smooth Revenue applies to lower-traffic locations, AI Seating optimizes high-volume spots (Daniel, Bar Boulud). Frame around their scale — this isn't a single-restaurant pitch.</p></div></div>
@@ -1448,12 +1459,12 @@
     </div>
 
     <div class="card">
-        <h3 style="margin-top:0;color:var(--red)">3. Brian Krakower — BJ's Restaurant & Brewhouse <span class="badge badge-hot" style="margin-left:8px">ICP: 7</span></h3>
-        <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">~200-location chain. CIO. Resy. Referred by Maria Chen (existing champion). <strong>I selected Brian not because he showed the strongest near-term conversion signal</strong> — Orla was more enthusiastic — <strong>but because a 200-location chain represents the single highest-value account in this pipeline.</strong> Even at a lower conversion probability, the expected value justifies top-3 prioritization and a longer, partnership-first sales motion.</p>
-        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Reframe email — lead with partnership, not features</h4><p>Do NOT lead with AI Seating. Lead with what Brian asked for: trust and support. "Maria's been an incredible partner for us. I'd love to show you why." Propose a partnership conversation, not a product demo. Do NOT mention discounts.</p></div></div>
-        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 3</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Activate the Maria Chen reference</h4><p>Ask Maria if she'd be willing to have a brief call with Brian. A peer reference from someone he already trusts is more powerful than any demo. Send Brian a one-pager addressing his AI concern: "how AI Seating works alongside hosts, not instead of them."</p></div></div>
-        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 7</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Partnership conversation (30 min)</h4><p>Not a product demo. Let Brian ask about support SLAs, implementation, account management. This is the conversation he wanted at the booth but didn't get. End with: "What would the evaluation process look like on your end?"</p></div></div>
-        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 14</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Pilot proposal</h4><p>3-5 locations, 60 days, real data. Map internal stakeholders (CIO → VPs → Regional Directors → GMs). Enterprise buying process — Brian has budget authority but needs ops buy-in for rollout.</p></div></div>
+        <h3 style="margin-top:0;color:var(--red)">3. Frantz — Rustik Tavern <span class="badge badge-hot" style="margin-left:8px">ICP: 8</span></h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Owner-operator. On Resy, frustrated with support and nickel-and-diming. Said "you're singing my song." Strong enthusiasm but conversation stayed philosophical — needs product-specific follow-up to convert. 14% estimated deal probability.</p>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 1</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Personalized email — anchor on his frustration</h4><p>Reference the Resy pain directly: support black hole, nickel-and-diming. Lead with Operator pitch: "Built by people who've worked Saturday service." Include the anchor story (Resy pushed update at 6PM Friday). Propose a 20-minute demo, not a general conversation.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 3</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Follow up with specifics</h4><p>The booth conversation stayed on shared values without product details. Fix that now. Send a one-pager with: (1) what's included in base pricing (contrast Resy's add-ons), (2) support SLAs, (3) one quantified case study from a similar independent restaurant. Make the value concrete.</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 7</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Demo tailored to Rustik</h4><p>Show the product through his lens: how Smooth Revenue applies to his slow nights, what the support experience actually looks like, transparent pricing breakdown. End with: "What would switching look like on your end? What's the timeline?"</p></div></div>
+        <div class="timeline-step"><div class="timeline-marker"><div class="timeline-day">Day 14</div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Migration plan</h4><p>If demo lands, send a concrete Resy→Soft Skillet migration checklist. Owner-operators need to see that the switch won't disrupt service. Offer a 60-day pilot with rollback guarantee.</p></div></div>
     </div>
 
     <!-- QUICK REF -->
